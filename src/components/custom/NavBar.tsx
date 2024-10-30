@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MdMenuOpen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { SlLogin } from "react-icons/sl";
 import { ModeToggle } from "./mode-toggle";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
 
 const NavBar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,6 +21,8 @@ const NavBar = () => {
 			setIsMenuOpen(true);
 		}
 	};
+
+	const { currentUser, logOut } = useContext(AuthorizationContext);
 
 	return (
 		<div className="container max-w-full bg-blue-400 flex justify-between items-center py-2 relative">
@@ -67,6 +70,11 @@ const NavBar = () => {
 					<li>
 						<ModeToggle />
 					</li>
+					{currentUser && (
+						<li>
+							<p onClick={logOut}>Log out</p>
+						</li>
+					)}
 				</ul>
 			</div>
 		</div>

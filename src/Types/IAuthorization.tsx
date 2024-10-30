@@ -8,4 +8,6 @@ export interface IUser {
 
 export interface IAuthContextValues {
 	currentUser: IUser | null;
+	loginUser: (data: { email: string; password: string }) => Promise<void>;
+	logOut: () => Promise<void>;
 }

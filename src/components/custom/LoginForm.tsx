@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "./CustomFormField";
+import { useContext } from "react";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
 
 const formSchema = z.object({
-	username: z.string().min(2).max(50),
+	email: z.string().min(2).max(50),
+	password: z.string().min(2).max(50),
 });
 
 interface ILoginFormProps {
@@ -17,13 +20,21 @@ const LoginForm: React.FC<ILoginFormProps> = ({ handleLoginPage }) => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			username: "",
+			email: "",
+			password: "",
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
-	}
+	const { loginUser } = useContext(AuthorizationContext);
+
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		try {
+			await loginUser(values);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Form {...form}>
 			<form
