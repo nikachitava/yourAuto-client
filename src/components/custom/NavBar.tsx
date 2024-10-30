@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SlLogin } from "react-icons/sl";
 import { ModeToggle } from "./mode-toggle";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { CiLogout } from "react-icons/ci";
 
 const NavBar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,22 +60,26 @@ const NavBar = () => {
 			<div className="hidden md:block">
 				<ul className="flex justify-center items-center gap-6 text-white">
 					<li>
-						<Link to={"/login"}>
-							<SlLogin
+						{currentUser ? (
+							<CiLogout
 								size={24}
 								className="cursor-pointer"
 								color="black"
+								onClick={logOut}
 							/>
-						</Link>
+						) : (
+							<Link to={"/login"}>
+								<SlLogin
+									size={24}
+									className="cursor-pointer"
+									color="black"
+								/>
+							</Link>
+						)}
 					</li>
 					<li>
 						<ModeToggle />
 					</li>
-					{currentUser && (
-						<li>
-							<p onClick={logOut}>Log out</p>
-						</li>
-					)}
 				</ul>
 			</div>
 		</div>

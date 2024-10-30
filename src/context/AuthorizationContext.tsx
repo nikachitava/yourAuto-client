@@ -20,8 +20,10 @@ export const AuthorizationContextProvider: React.FC<{
 
 	const loginUser = async (data: { email: string; password: string }) => {
 		try {
-			const user = await useAxios.post("/auth/login", data);
-			setCurrentUser(user.data);
+			const response = await useAxios.post("/auth/login", data, {
+				withCredentials: true,
+			});
+			setCurrentUser(response.data.user._doc);
 		} catch (error) {
 			console.log(error);
 		}
