@@ -6,16 +6,22 @@ import { SearchFilterProvider } from "./context/SearchFilterContext";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "./components/custom/theme-provider";
 import { AuthorizationContextProvider } from "./context/AuthorizationContext";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<AuthorizationContextProvider>
-			<SearchFilterProvider>
-				<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-					<Toaster />
-					<PagesRouter />
-				</ThemeProvider>
-			</SearchFilterProvider>
-		</AuthorizationContextProvider>
+		<BrowserRouter>
+			<AuthorizationContextProvider>
+				<SearchFilterProvider>
+					<ThemeProvider
+						defaultTheme="dark"
+						storageKey="vite-ui-theme"
+					>
+						<Toaster />
+						<PagesRouter />
+					</ThemeProvider>
+				</SearchFilterProvider>
+			</AuthorizationContextProvider>
+		</BrowserRouter>
 	</StrictMode>
 );
