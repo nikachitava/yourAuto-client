@@ -4,8 +4,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import CustomSelect from "@/components/custom/CustomSelect";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
+	title: z.string().min(2).max(50),
 	brand: z.string().min(2).max(50),
 	model: z.string().min(2).max(50),
 	type: z.string().min(2).max(50),
@@ -16,6 +20,7 @@ const formSchema = z.object({
 	mileage: z.string().min(0),
 	engine: z.string().min(2).max(50),
 	gearbox: z.string().min(2).max(50),
+	description: z.string().min(2).max(500),
 	image: z.instanceof(File).optional(),
 });
 
@@ -23,6 +28,7 @@ const AddVehiclePage = () => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			title: "",
 			brand: "",
 			model: "",
 			type: "",
@@ -33,6 +39,7 @@ const AddVehiclePage = () => {
 			mileage: "",
 			engine: "",
 			gearbox: "",
+			description: "",
 			image: undefined,
 		},
 	});
@@ -40,6 +47,106 @@ const AddVehiclePage = () => {
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		console.log(values);
 	};
+
+	const vehicleTypes = [
+		"Convertible (CV)",
+		"Coupe",
+		"Sedan",
+		"Hatchback",
+		"SUV (Sport Utility Vehicle)",
+		"Truck",
+		"Minivan",
+		"Pickup Truck",
+		"Wagon",
+		"Crossover",
+		"Roadster",
+		"Van",
+		"Motorcycle",
+		"Electric Vehicle (EV)",
+		"Hybrid",
+	];
+
+	const fuelTypes = [
+		"Petrol",
+		"Diesel",
+		"Electric",
+		"Hybrid (Petrol/Electric)",
+		"Hybrid (Diesel/Electric)",
+		"CNG (Compressed Natural Gas)",
+		"LPG (Liquefied Petroleum Gas)",
+		"Hydrogen Fuel Cell",
+		"Biofuel",
+		"Ethanol",
+		"Biodiesel",
+		"Flex Fuel",
+	];
+
+	const gearboxTypes = [
+		"Manual",
+		"Automatic",
+		"Semi-Automatic",
+		"CVT (Continuously Variable Transmission)",
+		"Dual-Clutch",
+		"Tiptronic",
+		"AMT (Automated Manual Transmission)",
+		"DSG (Direct-Shift Gearbox)",
+		"Torque Converter",
+		"Sequential",
+		"Electric Drive",
+	];
+
+	const vehicleBrands = [
+		"Toyota",
+		"Honda",
+		"Ford",
+		"Chevrolet",
+		"Nissan",
+		"BMW",
+		"Mercedes-Benz",
+		"Audi",
+		"Volkswagen",
+		"Hyundai",
+		"Kia",
+		"Mazda",
+		"Subaru",
+		"Lexus",
+		"Tesla",
+		"Volvo",
+		"Jeep",
+		"Porsche",
+		"Ferrari",
+		"Lamborghini",
+		"Jaguar",
+		"Land Rover",
+		"Bentley",
+		"Aston Martin",
+		"Mitsubishi",
+		"Peugeot",
+		"Renault",
+		"Citroën",
+		"Fiat",
+		"Alfa Romeo",
+		"Rolls-Royce",
+		"Bugatti",
+		"Maserati",
+		"McLaren",
+		"Genesis",
+		"Ram",
+		"GMC",
+		"Acura",
+		"Infiniti",
+		"Mini",
+		"Chrysler",
+		"Cadillac",
+		"Lincoln",
+		"Buick",
+		"Suzuki",
+		"Isuzu",
+		"Dodge",
+		"SEAT",
+		"Skoda",
+		"Opel",
+	];
 
 	return (
 		<Form {...form}>
@@ -49,80 +156,100 @@ const AddVehiclePage = () => {
 			>
 				<CustomFormField
 					control={form.control}
-					name="brand"
-					label="Brand"
-					placeholder="Vehicle Brand"
+					name="title"
+					label="Title"
+					placeholder=""
 				/>
 
-				<CustomFormField
+				<CustomSelect
 					control={form.control}
-					name="model"
-					label="Model"
-					placeholder="Vehicle Model"
+					selectItems={vehicleBrands}
+					placeholder={"Brand"}
+					name={"brand"}
 				/>
 
-				<CustomFormField
+				<CustomSelect
 					control={form.control}
-					name="type"
-					label="Type"
-					placeholder="Vehicle Type"
+					selectItems={[]}
+					placeholder={"Model"}
+					name={"model"}
+					disabled
 				/>
 
-				<CustomFormField
-					control={form.control}
-					name="status"
-					label="Status"
-					placeholder="Vehicle Status"
-				/>
+				<div className="flex items-center justify-between gap-8">
+					<CustomSelect
+						control={form.control}
+						selectItems={vehicleTypes}
+						placeholder={"Type"}
+						name={"type"}
+					/>
 
-				<CustomFormField
-					control={form.control}
-					name="fuelType"
-					label="Fuel Type"
-					placeholder="Fuel Type"
-				/>
+					<CustomSelect
+						control={form.control}
+						selectItems={["განბაჟებული", "განუბაჟებელი"]}
+						placeholder={"Status"}
+						name={"status"}
+					/>
 
-				<CustomFormField
-					control={form.control}
-					name="year"
-					label="Factory Year"
-					placeholder="Vehicle factory year"
-				/>
+					<CustomSelect
+						control={form.control}
+						selectItems={fuelTypes}
+						placeholder={"Fuel Type"}
+						name={"fuelType"}
+					/>
+				</div>
 
-				<CustomFormField
-					control={form.control}
-					name="price"
-					label="Price"
-					placeholder="Vehicle Price"
-				/>
+				<div className="grid grid-cols-3 gap-8">
+					<CustomFormField
+						control={form.control}
+						name="year"
+						label="Factory Year"
+						placeholder="Vehicle factory year"
+					/>
 
-				<CustomFormField
-					control={form.control}
-					name="mileage"
-					label="Mileage"
-					placeholder="Vehicle Status"
-				/>
+					<CustomFormField
+						control={form.control}
+						name="price"
+						label="Price"
+						placeholder="Vehicle Price"
+					/>
+
+					<CustomFormField
+						control={form.control}
+						name="mileage"
+						label="Mileage"
+						placeholder="Mileage"
+					/>
+				</div>
 
 				<CustomFormField
 					control={form.control}
 					name="engine"
 					label="Engine"
-					placeholder="Vehicle Engine"
+					placeholder="Engine"
 				/>
 
-				<CustomFormField
+				<CustomSelect
 					control={form.control}
-					name="gearbox"
-					label="GearBox"
-					placeholder="Vehicle Status"
+					selectItems={gearboxTypes}
+					placeholder={"Gearbox"}
+					name={"gearbox"}
 				/>
+
+				<div className="grid w-full gap-1.5">
+					<Label htmlFor="message">Description</Label>
+					<Textarea
+						className="resize-none h-40"
+						placeholder="Type your vehicle description here."
+					/>
+				</div>
 
 				<CustomFormField
 					control={form.control}
 					name="image"
 					label="Image"
 					type="file"
-					placeholder="Vehicle Status"
+					placeholder="Vehicle Images"
 				/>
 
 				<Button type="submit" className="w-full">
