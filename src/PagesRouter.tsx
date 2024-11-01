@@ -6,6 +6,8 @@ import Auth from "./pages/Auth";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
+import ProtectedRoute from "./components/custom/ProtectedRoute";
+import AddVehiclePage from "./pages/AddVehiclePage";
 
 const PagesRouter = () => {
 	return (
@@ -14,6 +16,10 @@ const PagesRouter = () => {
 			<Route element={<DefaultLayout />}>
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
+				<Route
+					path="/addvehicle"
+					element={<ProtectedRoute element={AddVehiclePage} />}
+				/>
 			</Route>
 
 			{/* Auth Layout */}

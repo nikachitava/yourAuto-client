@@ -7,9 +7,13 @@ const Home = () => {
 	const { currentUser } = useContext(AuthorizationContext);
 	return (
 		<div>
-			{currentUser && (
-				<h1 className="text-white">Hello, {currentUser.name}</h1>
-			)}
+			<div className="container mt-8">
+				{currentUser && (
+					<h1 className="dark:text-white text-2xl text-darktext font-bold">
+						Welcome back, {currentUser.name}
+					</h1>
+				)}
+			</div>
 			<SearchFilter />
 			<VehiclesContent />
 		</div>

@@ -1,12 +1,14 @@
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "../ui/toast";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
 
 const VehicleCard = () => {
 	const { toast } = useToast();
 	const navigate = useNavigate();
 
-	const currentUser = false;
+	const { currentUser } = useContext(AuthorizationContext);
 
 	const handleCardClick = () => {
 		if (!currentUser) {

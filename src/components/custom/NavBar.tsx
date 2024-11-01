@@ -77,6 +77,13 @@ const NavBar = () => {
 							</Link>
 						)}
 					</li>
+					{currentUser && (
+						<li>
+							<Link to={"/addvehicle"}>
+								<p className="cursor-pointer">Add Vehicle</p>
+							</Link>
+						</li>
+					)}
 					<li>
 						<ModeToggle />
 					</li>
