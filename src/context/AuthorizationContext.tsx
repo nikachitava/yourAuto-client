@@ -17,7 +17,9 @@ export const AuthorizationContext = createContext<IAuthContextValues>(
 export const AuthorizationContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({ children }) => {
-	const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+	const [currentUser, setCurrentUser] = useState<IUser | null>(
+		JSON.parse(localStorage.getItem("user") || "null")
+	);
 
 	const navigate = useNavigate();
 
@@ -27,6 +29,10 @@ export const AuthorizationContextProvider: React.FC<{
 				withCredentials: true,
 			});
 			setCurrentUser(response.data.user._doc);
+			localStorage.setItem(
+				"user",
+				JSON.stringify(response.data.user._doc)
+			);
 			navigate("/");
 		} catch (error) {
 			console.log(error);
@@ -37,6 +43,7 @@ export const AuthorizationContextProvider: React.FC<{
 		try {
 			await useAxios.post("/auth/logout");
 			setCurrentUser(null);
+			localStorage.removeItem("user");
 			navigate("/");
 		} catch (error) {
 			console.log(error);
