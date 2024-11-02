@@ -3,8 +3,16 @@ import { ToastAction } from "../ui/toast";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { IVehicle } from "@/Types/IVehicle";
 
-const VehicleCard = () => {
+const VehicleCard: React.FC<IVehicle> = ({
+	title,
+	brand,
+	fuelType,
+	price,
+	gearBox,
+	image,
+}) => {
 	const { toast } = useToast();
 	const navigate = useNavigate();
 
@@ -32,25 +40,25 @@ const VehicleCard = () => {
 			onClick={handleCardClick}
 		>
 			<img
-				src="/images/bmw428.jpg"
+				src={`http://localhost:3000${image}`}
 				alt=""
 				className="rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-125"
 			/>
 			<div className="mt-4">
 				<div className="flex items-center justify-between">
-					<h1 className="text-xl font-bold">BMW 428</h1>
-					<p>12.500$</p>
+					<h1 className="text-xl font-bold">{title}</h1>
+					<p>{price}$</p>
 				</div>
 				<hr />
 				<div className="flex items-center gap-4 mt-2">
 					<p className="text-[12px] px-4 py-2 bg-slate-300 rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						CUV
+						{brand}
 					</p>
 					<p className="text-[12px] px-4 py-2 bg-slate-300 rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						Fuel
+						{fuelType}
 					</p>
 					<p className="text-[12px] px-4 py-2 bg-slate-300 rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						2018
+						{gearBox}
 					</p>
 				</div>
 			</div>

@@ -12,9 +12,10 @@ import {
 	gearboxTypes,
 	vehicleBrands,
 	vehicleTypes,
+	vehicleModels,
 } from "@/data/VehiclesStaticData";
 import { useAxios } from "@/hooks/useAxios";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 
 const formSchema = z.object({
@@ -56,6 +57,70 @@ const AddVehiclePage = () => {
 	const brandValue = form.watch("brand");
 
 	const { currentUser } = useContext(AuthorizationContext);
+	const [modelOptions, setModelOptions] = useState<string[]>([]);
+
+	type VehicleBrands =
+		| "Toyota"
+		| "Honda"
+		| "Ford"
+		| "Chevrolet"
+		| "Nissan"
+		| "BMW"
+		| "MercedesBenz"
+		| "Audi"
+		| "Volkswagen"
+		| "Hyundai"
+		| "Kia"
+		| "Mazda"
+		| "Subaru"
+		| "Lexus"
+		| "Tesla"
+		| "Volvo"
+		| "Jeep"
+		| "Porsche"
+		| "Ferrari"
+		| "Lamborghini"
+		| "Jaguar"
+		| "LandRover"
+		| "Bentley"
+		| "AstonMartin"
+		| "Mitsubishi"
+		| "Peugeot"
+		| "Renault"
+		| "Citroën"
+		| "Fiat"
+		| "AlfaRomeo"
+		| "RollsRoyce"
+		| "Bugatti"
+		| "Maserati"
+		| "McLaren"
+		| "Genesis"
+		| "Ram"
+		| "GMC"
+		| "Acura"
+		| "Infiniti"
+		| "Mini"
+		| "Chrysler"
+		| "Cadillac"
+		| "Lincoln"
+		| "Buick"
+		| "Suzuki"
+		| "Isuzu"
+		| "Dodge"
+		| "SEAT"
+		| "Skoda"
+		| "Opel";
+
+	useEffect(() => {
+		if (
+			brandValue &&
+			vehicleModels.hasOwnProperty(brandValue as VehicleBrands)
+		) {
+			setModelOptions(vehicleModels[brandValue as VehicleBrands]);
+		} else {
+			setModelOptions([]);
+		}
+	}, [brandValue]);
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
@@ -109,7 +174,7 @@ const AddVehiclePage = () => {
 
 				<CustomSelect
 					control={form.control}
-					selectItems={["RS8", "RS9"]}
+					selectItems={modelOptions}
 					placeholder={"Model"}
 					name={"model"}
 					disabled={brandValue ? false : true}
