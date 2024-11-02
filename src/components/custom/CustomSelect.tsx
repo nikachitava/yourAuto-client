@@ -6,7 +6,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Control } from "react-hook-form";
-import { FormField } from "../ui/form";
+import { FormField, FormMessage } from "../ui/form";
 
 interface ICustomSelectProps {
 	control: Control<any>;
@@ -28,18 +28,21 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
 			control={control}
 			name={name}
 			render={({ field }) => (
-				<Select value={field.value} onValueChange={field.onChange}>
-					<SelectTrigger disabled={disabled}>
-						<SelectValue placeholder={placeholder} />
-					</SelectTrigger>
-					<SelectContent>
-						{selectItems.map((item, index) => (
-							<SelectItem key={index} value={item}>
-								{item}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+				<div className="flex flex-col gap-3 w-full">
+					<Select value={field.value} onValueChange={field.onChange}>
+						<SelectTrigger disabled={disabled}>
+							<SelectValue placeholder={placeholder} />
+						</SelectTrigger>
+						<SelectContent>
+							{selectItems.map((item, index) => (
+								<SelectItem key={index} value={item}>
+									{item}
+								</SelectItem>
+							))}
+						</SelectContent>
+						<FormMessage />
+					</Select>
+				</div>
 			)}
 		/>
 	);

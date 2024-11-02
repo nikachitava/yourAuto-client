@@ -34,11 +34,29 @@ const CustomFormField = ({
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
 					<FormControl>
-						<Input
-							placeholder={placeholder}
-							{...field}
-							type={type}
-						/>
+						{type === "file" ? (
+							<Input
+								type="file"
+								{...field}
+								value={undefined}
+								onChange={(e) => {
+									if (
+										e.target.files &&
+										e.target.files.length > 0
+									) {
+										field.onChange(e.target.files[0]);
+									} else {
+										field.onChange(null);
+									}
+								}}
+							/>
+						) : (
+							<Input
+								placeholder={placeholder}
+								{...field}
+								type={type}
+							/>
+						)}
 					</FormControl>
 					<FormDescription>{description}</FormDescription>
 					<FormMessage />

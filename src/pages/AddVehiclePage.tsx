@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 import CustomSelect from "@/components/custom/CustomSelect";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+	fuelTypes,
+	gearboxTypes,
+	vehicleBrands,
+	vehicleTypes,
+} from "@/data/VehiclesStaticData";
+import { useAxios } from "@/hooks/useAxios";
+import { useContext } from "react";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
 
 const formSchema = z.object({
 	title: z.string().min(2).max(50),
@@ -15,13 +24,13 @@ const formSchema = z.object({
 	type: z.string().min(2).max(50),
 	status: z.string().min(2).max(50),
 	fuelType: z.string().min(2).max(50),
-	year: z.string().min(4).max(4),
-	price: z.string().min(0),
-	mileage: z.string().min(0),
+	year: z.string().min(1).max(4),
+	price: z.string().min(2).max(50),
+	mileage: z.string().min(2).max(50),
 	engine: z.string().min(2).max(50),
-	gearbox: z.string().min(2).max(50),
+	gearBox: z.string().min(2).max(50),
 	description: z.string().min(2).max(500),
-	image: z.instanceof(File).optional(),
+	image: z.instanceof(File).nullable().optional().default(null),
 });
 
 const AddVehiclePage = () => {
@@ -38,115 +47,44 @@ const AddVehiclePage = () => {
 			price: "",
 			mileage: "",
 			engine: "",
-			gearbox: "",
+			gearBox: "",
 			description: "",
-			image: undefined,
+			image: null,
 		},
 	});
 
+	const brandValue = form.watch("brand");
+
+	const { currentUser } = useContext(AuthorizationContext);
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
-		console.log(values);
+		try {
+			const newVehicleData = new FormData();
+
+			newVehicleData.append("owner", currentUser?._id || "");
+			newVehicleData.append("title", values.title);
+			newVehicleData.append("brand", values.brand);
+			newVehicleData.append("model", values.model);
+			newVehicleData.append("type", values.type);
+			newVehicleData.append("status", values.status);
+			newVehicleData.append("fuelType", values.fuelType);
+			newVehicleData.append("year", values.year);
+			newVehicleData.append("price", values.price);
+			newVehicleData.append("mileage", values.mileage);
+			newVehicleData.append("engine", values.engine);
+			newVehicleData.append("gearBox", values.gearBox);
+			newVehicleData.append("description", values.description);
+
+			if (values.image) {
+				newVehicleData.append("image", values.image);
+			}
+
+			const newVehicle = await useAxios.post("/vehicle", newVehicleData);
+			console.log("New vehicle:", newVehicle);
+		} catch (error) {
+			console.error("Error adding vehicle:", error);
+		}
 	};
-
-	const vehicleTypes = [
-		"Convertible (CV)",
-		"Coupe",
-		"Sedan",
-		"Hatchback",
-		"SUV (Sport Utility Vehicle)",
-		"Truck",
-		"Minivan",
-		"Pickup Truck",
-		"Wagon",
-		"Crossover",
-		"Roadster",
-		"Van",
-		"Motorcycle",
-		"Electric Vehicle (EV)",
-		"Hybrid",
-	];
-
-	const fuelTypes = [
-		"Petrol",
-		"Diesel",
-		"Electric",
-		"Hybrid (Petrol/Electric)",
-		"Hybrid (Diesel/Electric)",
-		"CNG (Compressed Natural Gas)",
-		"LPG (Liquefied Petroleum Gas)",
-		"Hydrogen Fuel Cell",
-		"Biofuel",
-		"Ethanol",
-		"Biodiesel",
-		"Flex Fuel",
-	];
-
-	const gearboxTypes = [
-		"Manual",
-		"Automatic",
-		"Semi-Automatic",
-		"CVT (Continuously Variable Transmission)",
-		"Dual-Clutch",
-		"Tiptronic",
-		"AMT (Automated Manual Transmission)",
-		"DSG (Direct-Shift Gearbox)",
-		"Torque Converter",
-		"Sequential",
-		"Electric Drive",
-	];
-
-	const vehicleBrands = [
-		"Toyota",
-		"Honda",
-		"Ford",
-		"Chevrolet",
-		"Nissan",
-		"BMW",
-		"Mercedes-Benz",
-		"Audi",
-		"Volkswagen",
-		"Hyundai",
-		"Kia",
-		"Mazda",
-		"Subaru",
-		"Lexus",
-		"Tesla",
-		"Volvo",
-		"Jeep",
-		"Porsche",
-		"Ferrari",
-		"Lamborghini",
-		"Jaguar",
-		"Land Rover",
-		"Bentley",
-		"Aston Martin",
-		"Mitsubishi",
-		"Peugeot",
-		"Renault",
-		"Citroën",
-		"Fiat",
-		"Alfa Romeo",
-		"Rolls-Royce",
-		"Bugatti",
-		"Maserati",
-		"McLaren",
-		"Genesis",
-		"Ram",
-		"GMC",
-		"Acura",
-		"Infiniti",
-		"Mini",
-		"Chrysler",
-		"Cadillac",
-		"Lincoln",
-		"Buick",
-		"Suzuki",
-		"Isuzu",
-		"Dodge",
-		"SEAT",
-		"Skoda",
-		"Opel",
-	];
 
 	return (
 		<Form {...form}>
@@ -154,6 +92,7 @@ const AddVehiclePage = () => {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md "
 			>
+				<h1>ID: {currentUser?._id}</h1>
 				<CustomFormField
 					control={form.control}
 					name="title"
@@ -170,10 +109,10 @@ const AddVehiclePage = () => {
 
 				<CustomSelect
 					control={form.control}
-					selectItems={[]}
+					selectItems={["RS8", "RS9"]}
 					placeholder={"Model"}
 					name={"model"}
-					disabled
+					disabled={brandValue ? false : true}
 				/>
 
 				<div className="flex items-center justify-between gap-8">
@@ -233,12 +172,13 @@ const AddVehiclePage = () => {
 					control={form.control}
 					selectItems={gearboxTypes}
 					placeholder={"Gearbox"}
-					name={"gearbox"}
+					name="gearBox"
 				/>
 
 				<div className="grid w-full gap-1.5">
 					<Label htmlFor="message">Description</Label>
 					<Textarea
+						{...form.register("description")}
 						className="resize-none h-40"
 						placeholder="Type your vehicle description here."
 					/>
