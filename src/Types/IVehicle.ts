@@ -9,8 +9,8 @@ export interface IVehicle {
         fuelType?: string;
         year?: string;
         price?: string;
-        mileage?: number;
-        engine?: number;
+        mileage?: string;
+        engine?: string;
         gearBox?: string;
         description?: string;
         image?: string;
@@ -23,3 +23,55 @@ export interface IOwner {
         phone: string;
         _id: string;
 }
+
+export type VehicleBrands =
+		| "Toyota"
+		| "Honda"
+		| "Ford"
+		| "Chevrolet"
+		| "Nissan"
+		| "BMW"
+		| "MercedesBenz"
+		| "Audi"
+		| "Volkswagen"
+		| "Hyundai"
+		| "Kia"
+		| "Mazda"
+		| "Subaru"
+		| "Lexus"
+		| "Tesla"
+		| "Volvo"
+		| "Jeep"
+		| "Porsche"
+		| "Ferrari"
+		| "Lamborghini"
+		| "Jaguar"
+		| "LandRover"
+		| "Bentley"
+		| "AstonMartin"
+		| "Mitsubishi"
+		| "Peugeot"
+		| "Renault"
+		| "Citroën"
+		| "Fiat"
+		| "AlfaRomeo"
+		| "RollsRoyce"
+		| "Bugatti"
+		| "Maserati"
+		| "McLaren"
+		| "Genesis"
+		| "Ram"
+		| "GMC"
+		| "Acura"
+		| "Infiniti"
+		| "Mini"
+		| "Chrysler"
+		| "Cadillac"
+		| "Lincoln"
+		| "Buick"
+		| "Suzuki"
+		| "Isuzu"
+		| "Dodge"
+		| "SEAT"
+		| "Skoda"
+		| "Opel";

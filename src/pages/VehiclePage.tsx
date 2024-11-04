@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { toast } from "@/hooks/use-toast";
 import { useAxios } from "@/hooks/useAxios";
 import { IVehicle } from "@/Types/IVehicle";
 import { useContext, useEffect, useState } from "react";
@@ -13,6 +14,25 @@ const VehiclePage = () => {
 	const { currentUser } = useContext(AuthorizationContext);
 
 	const isOwner = currentUser?._id === vehicle?.owner._id;
+
+	const deleteVehicle = async () => {
+		if (!isOwner) return;
+
+		try {
+			await useAxios.delete(`/vehicle/${id}`);
+			navigate("/");
+			toast({
+				title: "Vehicle deleted successfully",
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const editVehicle = () => {
+		if (!isOwner) return;
+		navigate(`/editvehicle/${id}`);
+	};
 
 	useEffect(() => {
 		const fetchVehicleData = async () => {
@@ -36,8 +56,8 @@ const VehiclePage = () => {
 				<div className="my-10">
 					<h1>It's your vehicle</h1>
 					<div className="flex gap-4 items-center mt-2">
-						<Button>EDIT</Button>
-						<Button>DELETE</Button>
+						<Button onClick={editVehicle}>EDIT</Button>
+						<Button onClick={deleteVehicle}>DELETE</Button>
 					</div>
 				</div>
 			)}

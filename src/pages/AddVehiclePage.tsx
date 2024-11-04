@@ -17,6 +17,7 @@ import {
 import { useAxios } from "@/hooks/useAxios";
 import { useContext, useEffect, useState } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { VehicleBrands } from "@/Types/IVehicle";
 
 const formSchema = z.object({
 	title: z.string().min(2).max(50),
@@ -58,58 +59,6 @@ const AddVehiclePage = () => {
 
 	const { currentUser } = useContext(AuthorizationContext);
 	const [modelOptions, setModelOptions] = useState<string[]>([]);
-
-	type VehicleBrands =
-		| "Toyota"
-		| "Honda"
-		| "Ford"
-		| "Chevrolet"
-		| "Nissan"
-		| "BMW"
-		| "MercedesBenz"
-		| "Audi"
-		| "Volkswagen"
-		| "Hyundai"
-		| "Kia"
-		| "Mazda"
-		| "Subaru"
-		| "Lexus"
-		| "Tesla"
-		| "Volvo"
-		| "Jeep"
-		| "Porsche"
-		| "Ferrari"
-		| "Lamborghini"
-		| "Jaguar"
-		| "LandRover"
-		| "Bentley"
-		| "AstonMartin"
-		| "Mitsubishi"
-		| "Peugeot"
-		| "Renault"
-		| "Citroën"
-		| "Fiat"
-		| "AlfaRomeo"
-		| "RollsRoyce"
-		| "Bugatti"
-		| "Maserati"
-		| "McLaren"
-		| "Genesis"
-		| "Ram"
-		| "GMC"
-		| "Acura"
-		| "Infiniti"
-		| "Mini"
-		| "Chrysler"
-		| "Cadillac"
-		| "Lincoln"
-		| "Buick"
-		| "Suzuki"
-		| "Isuzu"
-		| "Dodge"
-		| "SEAT"
-		| "Skoda"
-		| "Opel";
 
 	useEffect(() => {
 		if (
@@ -157,7 +106,6 @@ const AddVehiclePage = () => {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md "
 			>
-				<h1>ID: {currentUser?._id}</h1>
 				<CustomFormField
 					control={form.control}
 					name="title"

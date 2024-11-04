@@ -9,6 +9,7 @@ import About from "./pages/About";
 import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import VehiclePage from "./pages/VehiclePage";
+import EditVehicleData from "./pages/EditVehicleData";
 
 const PagesRouter = () => {
 	return (
@@ -24,6 +25,10 @@ const PagesRouter = () => {
 				<Route
 					path="/vehicle/:id"
 					element={<ProtectedRoute element={VehiclePage} />}
+				/>
+				<Route
+					path="/editvehicle/:id"
+					element={<ProtectedRoute element={EditVehicleData} />}
 				/>
 			</Route>
 
