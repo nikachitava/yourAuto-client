@@ -1,0 +1,94 @@
+import { Button } from "@/components/ui/button";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { useAxios } from "@/hooks/useAxios";
+import { IVehicle } from "@/Types/IVehicle";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+const VehiclePage = () => {
+	const [vehicle, setVehicle] = useState<IVehicle | null>(null);
+	const { id } = useParams();
+	const navigate = useNavigate();
+
+	const { currentUser } = useContext(AuthorizationContext);
+
+	const isOwner = currentUser?._id === vehicle?.owner._id;
+
+	useEffect(() => {
+		const fetchVehicleData = async () => {
+			try {
+				const vehicleData = await useAxios.get(`/vehicle/${id}`);
+				setVehicle(vehicleData.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		if (id) fetchVehicleData();
+		else navigate("/");
+	}, []);
+
+	if (!vehicle) return null;
+
+	return (
+		<div className="container mt-10">
+			{isOwner && (
+				<div className="my-10">
+					<h1>It's your vehicle</h1>
+					<div className="flex gap-4 items-center mt-2">
+						<Button>EDIT</Button>
+						<Button>DELETE</Button>
+					</div>
+				</div>
+			)}
+
+			<div className="flex flex-col gap-8 lg:flex-row">
+				<img
+					src={`http://localhost:3000${vehicle.image}`}
+					alt=""
+					className="rounded-sm flex-1 max-h-[400px] shadow-2xl"
+				/>
+				<div className="flex-1 flex flex-col justify-between">
+					<h1>{vehicle.title}</h1>
+
+					<div className="flex items-center gap-4">
+						<h3>{vehicle.brand}</h3>
+						<h3>{vehicle.model}</h3>
+						<h3>{vehicle.type}</h3>
+					</div>
+
+					<h1>{vehicle.price}$</h1>
+
+					<h1>
+						Owner:{" "}
+						<span>
+							{vehicle.owner.name} {vehicle.owner.surname}
+						</span>
+					</h1>
+					<h1>
+						Factory Year: <span>{vehicle.year}</span>
+					</h1>
+					<h1>
+						GearBox: <span>{vehicle.gearBox}</span>
+					</h1>
+					<h1>
+						Fuel Type <span>{vehicle.fuelType}</span>
+					</h1>
+					<h1>
+						Mileage: <span>{vehicle.mileage}</span>
+					</h1>
+					<h1>
+						Engine: <span>{vehicle.engine}</span>
+					</h1>
+				</div>
+			</div>
+			<div className="mt-8">
+				<h1>
+					Description: <span>{vehicle.description}</span>
+				</h1>
+			</div>
+		</div>
+	);
+};
+
+export default VehiclePage;

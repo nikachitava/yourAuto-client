@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import VehicleCard from "./VehicleCard";
 import { IVehicle } from "@/Types/IVehicle";
 import { useAxios } from "@/hooks/useAxios";
+import { Link } from "react-router-dom";
 
 const VehiclesContent = () => {
 	const [vehicles, setVehicles] = useState<IVehicle[] | null>(null);
@@ -11,7 +12,6 @@ const VehiclesContent = () => {
 			try {
 				const vehicleData = await useAxios.get("/vehicle");
 				setVehicles(vehicleData.data);
-				console.log(vehicleData.data);
 			} catch (error) {
 				console.log(error);
 			}
@@ -24,15 +24,17 @@ const VehiclesContent = () => {
 		<div className="container my-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10">
 			{vehicles &&
 				vehicles.map((vehicle, index) => (
-					<VehicleCard
-						key={index}
-						title={vehicle.title}
-						brand={vehicle.brand}
-						fuelType={vehicle.fuelType}
-						price={vehicle.price}
-						gearBox={vehicle.gearBox}
-						image={vehicle.image}
-					/>
+					<Link to={`/vehicle/${vehicle._id}`} key={index}>
+						<VehicleCard
+							owner={vehicle.owner}
+							title={vehicle.title}
+							brand={vehicle.brand}
+							fuelType={vehicle.fuelType}
+							price={vehicle.price}
+							gearBox={vehicle.gearBox}
+							image={vehicle.image}
+						/>
+					</Link>
 				))}
 		</div>
 	);

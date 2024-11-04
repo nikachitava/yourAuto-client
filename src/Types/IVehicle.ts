@@ -1,6 +1,6 @@
 export interface IVehicle {
         _id?: string;
-        owner?: string;
+        owner: IOwner;
         title?: string;
         brand?: string;
         model?: string;
@@ -15,4 +15,11 @@ export interface IVehicle {
         description?: string;
         image?: string;
     
+}
+
+export interface IOwner {
+        name: string;
+        surname: string;
+        phone: string;
+        _id: string;
 }
