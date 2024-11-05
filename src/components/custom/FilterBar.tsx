@@ -12,18 +12,30 @@ const FilterBar = () => {
 		minPrice,
 		maxPrice,
 		fuelType,
+		clearBrand,
+		clearModel,
+		clearStatus,
+		clearYears,
+		clearPrices,
+		clearFuelType,
 	} = useContext(SearchFilterContext);
 	return (
 		<div className="flex items-center gap-4">
-			{brand && <FilterItem title={brand} />}
-			{model && <FilterItem title={model} />}
-			{status && <FilterItem title={status} />}
-			{fuelType && <FilterItem title={status} />}
+			{brand && <FilterItem title={brand} onClick={clearBrand} />}
+			{model && <FilterItem title={model} onClick={clearModel} />}
+			{status && <FilterItem title={status} onClick={clearStatus} />}
+			{fuelType && <FilterItem title={status} onClick={clearFuelType} />}
 			{minYear && maxYear && (
-				<FilterItem title={`${minYear} - ${maxYear}`} />
+				<FilterItem
+					title={`${minYear} - ${maxYear}`}
+					onClick={clearYears}
+				/>
 			)}
 			{minPrice && maxPrice && (
-				<FilterItem title={`${minPrice} - ${maxPrice}`} />
+				<FilterItem
+					title={`${minPrice} - ${maxPrice}`}
+					onClick={clearPrices}
+				/>
 			)}
 		</div>
 	);

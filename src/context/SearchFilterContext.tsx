@@ -16,6 +16,13 @@ const CONTEXT_DEFAULT_VALUE: ISearchFilterContext = {
 	setFuelType: () => {},
 	handleMinMaxYear: () => {},
 	handleMinMaxPrice: () => {},
+
+	clearBrand: () => {},
+	clearModel: () => {},
+	clearStatus: () => {},
+	clearYears: () => {},
+	clearPrices: () => {},
+	clearFuelType: () => {},
 };
 
 export const SearchFilterContext = createContext<ISearchFilterContext>(
@@ -42,6 +49,32 @@ export const SearchFilterProvider: React.FC<{ children: ReactNode }> = ({
 	const handleMinMaxPrice = (min: number, max: number) => {
 		setMinPrice(min);
 		setMaxPrice(max);
+	};
+
+	const clearBrand = () => {
+		setBrand(null);
+	};
+
+	const clearModel = () => {
+		setModel(null);
+	};
+
+	const clearStatus = () => {
+		setStatus(null);
+	};
+
+	const clearYears = () => {
+		setMinYear(null);
+		setMaxYear(null);
+	};
+
+	const clearPrices = () => {
+		setMinPrice(null);
+		setMaxPrice(null);
+	};
+
+	const clearFuelType = () => {
+		setFuelType(null);
 	};
 
 	useEffect(() => {
@@ -72,6 +105,12 @@ export const SearchFilterProvider: React.FC<{ children: ReactNode }> = ({
 				setFuelType,
 				handleMinMaxYear,
 				handleMinMaxPrice,
+				clearBrand,
+				clearModel,
+				clearStatus,
+				clearYears,
+				clearPrices,
+				clearFuelType,
 			}}
 		>
 			{children}

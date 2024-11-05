@@ -14,4 +14,11 @@ export interface ISearchFilterContext {
 	setFuelType: React.Dispatch<React.SetStateAction<string | null>>;
 	handleMinMaxYear: (min: number, max: number) => void;
 	handleMinMaxPrice: (min: number, max: number) => void;
+
+	clearBrand: () => void;
+	clearModel: () => void;
+	clearStatus: () => void;
+	clearYears: () => void;
+	clearPrices: () => void;
+	clearFuelType: () => void;
 }
