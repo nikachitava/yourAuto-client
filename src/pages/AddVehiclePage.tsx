@@ -18,6 +18,7 @@ import { useAxios } from "@/hooks/useAxios";
 import { useContext, useEffect, useState } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { VehicleBrands } from "@/Types/IVehicle";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
 	title: z.string().min(2).max(50),
@@ -71,6 +72,8 @@ const AddVehiclePage = () => {
 		}
 	}, [brandValue]);
 
+	const navigate = useNavigate();
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			const newVehicleData = new FormData();
@@ -93,8 +96,8 @@ const AddVehiclePage = () => {
 				newVehicleData.append("image", values.image);
 			}
 
-			const newVehicle = await useAxios.post("/vehicle", newVehicleData);
-			console.log("New vehicle:", newVehicle);
+			await useAxios.post("/vehicle", newVehicleData);
+			navigate("/");
 		} catch (error) {
 			console.error("Error adding vehicle:", error);
 		}

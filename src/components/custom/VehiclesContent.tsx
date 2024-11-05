@@ -22,7 +22,7 @@ const VehiclesContent = () => {
 
 	return (
 		<div className="container my-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10">
-			{vehicles &&
+			{vehicles && vehicles.length !== 0 ? (
 				vehicles.map((vehicle, index) => (
 					<Link to={`/vehicle/${vehicle._id}`} key={index}>
 						<VehicleCard
@@ -35,7 +35,10 @@ const VehiclesContent = () => {
 							image={vehicle.image}
 						/>
 					</Link>
-				))}
+				))
+			) : (
+				<h1>No vehicles founded !!!</h1>
+			)}
 		</div>
 	);
 };
