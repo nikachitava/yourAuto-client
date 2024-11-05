@@ -16,6 +16,8 @@ export const vehicleTypes = [
     "Hybrid",
 ];
 
+export const carStatus = ["განბაჟებული", "განუბაჟებელი"]
+
 export const fuelTypes = [
     "Petrol",
     "Diesel",

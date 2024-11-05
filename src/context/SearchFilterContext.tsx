@@ -1,5 +1,5 @@
 import { ISearchFilterContext } from "@/Types/ISearchFilterContext";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 const CONTEXT_DEFAULT_VALUE: ISearchFilterContext = {
 	brand: null,
@@ -43,6 +43,17 @@ export const SearchFilterProvider: React.FC<{ children: ReactNode }> = ({
 		setMinPrice(min);
 		setMaxPrice(max);
 	};
+
+	useEffect(() => {
+		setBrand(null);
+		setModel(null);
+		setStatus(null);
+		setMinYear(null);
+		setMaxYear(null);
+		setMinPrice(null);
+		setMaxPrice(null);
+		setFuelType(null);
+	}, []);
 
 	return (
 		<SearchFilterContext.Provider

@@ -1,27 +1,37 @@
 export interface IVehicle {
-        _id?: string;
+        _id: string;
         owner: IOwner;
-        title?: string;
-        brand?: string;
-        model?: string;
-        type?: string;
-        status?: string;
-        fuelType?: string;
-        year?: string;
-        price?: string;
-        mileage?: string;
-        engine?: string;
-        gearBox?: string;
-        description?: string;
+        title: string;
+        brand: string;
+        model: string;
+        type: string;
+        status: string;
+        fuelType: string;
+        year: string;
+        price: string;
+        mileage: string;
+        engine: string;
+        gearBox: string;
+        description: string;
         image?: string;
-    
 }
+
 
 export interface IOwner {
         name: string;
         surname: string;
         phone: string;
         _id: string;
+}
+
+export interface IVehicleCardProps {
+	owner: IOwner;
+	title: string;
+	brand: string;
+	fuelType: string;
+	price: string;
+	gearBox: string;
+	image?: string;
 }
 
 export type VehicleBrands =
@@ -75,3 +85,5 @@ export type VehicleBrands =
 		| "SEAT"
 		| "Skoda"
 		| "Opel";
+		
+

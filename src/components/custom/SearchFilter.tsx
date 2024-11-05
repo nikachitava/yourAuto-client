@@ -7,24 +7,9 @@ import ModelsContent from "./Dropdown/ModelsContent";
 import CarStatusContent from "./Dropdown/CarStatusContent";
 import YearContent from "./Dropdown/YearContent";
 import FuelTypeContent from "./Dropdown/FuelTypeContent";
+import { carStatus, fuelTypes, vehicleBrands } from "@/data/VehiclesStaticData";
 
 const SearchFilter = () => {
-	const carBrands = [
-		"Toyota",
-		"Honda",
-		"Ford",
-		"Chevrolet",
-		"BMW",
-		"Mercedes-Benz",
-		"Audi",
-		"Tesla",
-		"Nissan",
-		"Volkswagen",
-	];
-
-	const carStatus = ["განბაჟებული", "გაბუბაჟებელი"];
-	const fuelTypes = ["ბენზინი", "დიზელი", "ელექტრო", "ჰიბრიდი"];
-
 	const {
 		brand,
 		model,
@@ -40,11 +25,11 @@ const SearchFilter = () => {
 		<div className="container mt-10 max-w-full">
 			<div className="bg-white dark:bg-[var(--background)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-10 rounded-xl shadow-md dark:border-2 dark:border-white">
 				<DropDown title={"Brand"}>
-					<BrandContent content={carBrands} />
+					<BrandContent content={vehicleBrands} />
 				</DropDown>
 
 				<DropDown title={"Model"}>
-					<ModelsContent content={carBrands} />
+					<ModelsContent content={vehicleBrands} />
 				</DropDown>
 
 				<DropDown title="Status">

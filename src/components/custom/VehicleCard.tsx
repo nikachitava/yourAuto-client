@@ -3,9 +3,9 @@ import { ToastAction } from "../ui/toast";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
-import { IVehicle } from "@/Types/IVehicle";
+import { IVehicleCardProps } from "@/Types/IVehicle";
 
-const VehicleCard: React.FC<IVehicle> = ({
+const VehicleCard: React.FC<IVehicleCardProps> = ({
 	title,
 	brand,
 	fuelType,
