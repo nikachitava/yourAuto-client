@@ -1,3 +1,4 @@
+import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
 import { Button } from "@/components/ui/button";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { toast } from "@/hooks/use-toast";
@@ -62,44 +63,56 @@ const VehiclePage = () => {
 				</div>
 			)}
 
-			<div className="flex flex-col gap-8 lg:flex-row">
+			<div className="flex flex-col gap-4 lg:flex-row">
 				<img
 					src={`http://localhost:3000${vehicle.image}`}
 					alt=""
 					className="rounded-sm flex-1 max-h-[400px] shadow-2xl"
 				/>
-				<div className="flex-1 flex flex-col justify-between">
-					<h1>{vehicle.title}</h1>
+				<div className="flex-1 flex flex-col space-y-2 justify-between">
+					<h1 className="text-2xl font-bold text-darkblack dark:text-white">
+						{vehicle.title}
+					</h1>
 
-					<div className="flex items-center gap-4">
-						<h3>{vehicle.brand}</h3>
-						<h3>{vehicle.model}</h3>
-						<h3>{vehicle.type}</h3>
-					</div>
-
-					<h1>{vehicle.price}$</h1>
+					<h1 className="text-xl font-bold text-darkblack dark:text-white">
+						{vehicle.price}$
+					</h1>
 
 					<h1>
-						Owner:{" "}
-						<span>
-							{vehicle.owner.name} {vehicle.owner.surname}
+						Factory Year:{" "}
+						<span className="text-darkblack text-lg font-bold dark:text-white">
+							{vehicle.year}
 						</span>
 					</h1>
 					<h1>
-						Factory Year: <span>{vehicle.year}</span>
+						GearBox:{" "}
+						<span className="text-darkblack text-lg font-bold dark:text-white">
+							{vehicle.gearBox}
+						</span>
 					</h1>
 					<h1>
-						GearBox: <span>{vehicle.gearBox}</span>
+						Fuel Type:{" "}
+						<span className="text-darkblack text-lg font-bold dark:text-white">
+							{vehicle.fuelType}
+						</span>
 					</h1>
 					<h1>
-						Fuel Type <span>{vehicle.fuelType}</span>
+						Mileage:{" "}
+						<span className="text-darkblack text-lg font-bold dark:text-white">
+							{vehicle.mileage}
+						</span>
 					</h1>
 					<h1>
-						Mileage: <span>{vehicle.mileage}</span>
+						Engine:{" "}
+						<span className="text-darkblack text-lg font-bold dark:text-white">
+							{vehicle.engine}
+						</span>
 					</h1>
-					<h1>
-						Engine: <span>{vehicle.engine}</span>
-					</h1>
+					<VehicleOwnerCard
+						name={vehicle.owner.name}
+						surname={vehicle.owner.surname}
+						phone={vehicle.owner.phone}
+					/>
 				</div>
 			</div>
 			<div className="mt-8">
