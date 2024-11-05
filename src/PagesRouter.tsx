@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import VehiclePage from "./pages/VehiclePage";
 import EditVehicleData from "./pages/EditVehicleData";
+import UserProfile from "./pages/UserProfile";
 
 const PagesRouter = () => {
 	return (
@@ -29,6 +30,10 @@ const PagesRouter = () => {
 				<Route
 					path="/editvehicle/:id"
 					element={<ProtectedRoute element={EditVehicleData} />}
+				/>
+				<Route
+					path="/profile/:id"
+					element={<ProtectedRoute element={UserProfile} />}
 				/>
 			</Route>
 
