@@ -5,10 +5,30 @@ import ModelsContent from "./Dropdown/ModelsContent";
 import CarStatusContent from "./Dropdown/CarStatusContent";
 import YearContent from "./Dropdown/YearContent";
 import FuelTypeContent from "./Dropdown/FuelTypeContent";
-import { carStatus, fuelTypes, vehicleBrands } from "@/data/VehiclesStaticData";
+import {
+	carStatus,
+	fuelTypes,
+	vehicleBrands,
+	vehicleModels,
+} from "@/data/VehiclesStaticData";
 import FilterBar from "./FilterBar";
+import { useContext, useEffect, useState } from "react";
+import { VehicleBrands } from "@/Types/IVehicle";
+import { SearchFilterContext } from "@/context/SearchFilterContext";
 
 const SearchFilter = () => {
+	const [modelOptions, setModelOptions] = useState<string[]>([]);
+
+	const { brand } = useContext(SearchFilterContext);
+
+	useEffect(() => {
+		if (brand) {
+			setModelOptions(vehicleModels[brand as VehicleBrands]);
+		} else {
+			setModelOptions([]);
+		}
+	}, [brand]);
+
 	return (
 		<div className="container mt-10 max-w-full ">
 			<div className="dark:border-2 dark:border-white p-10 rounded-xl shadow-md ">
@@ -17,8 +37,8 @@ const SearchFilter = () => {
 						<BrandContent content={vehicleBrands} />
 					</DropDown>
 
-					<DropDown title={"Model"}>
-						<ModelsContent content={vehicleBrands} />
+					<DropDown title={"Model"} disabled={brand ? false : true}>
+						<ModelsContent content={modelOptions} />
 					</DropDown>
 
 					<DropDown title="Status">

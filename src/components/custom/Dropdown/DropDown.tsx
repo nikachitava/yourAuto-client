@@ -5,9 +5,10 @@ import { IoMdArrowDropup } from "react-icons/io";
 interface IDropDown {
 	title: string;
 	children: React.ReactNode;
+	disabled?: boolean;
 }
 
-const DropDown: React.FC<IDropDown> = ({ title, children }) => {
+const DropDown: React.FC<IDropDown> = ({ title, children, disabled }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
@@ -34,9 +35,14 @@ const DropDown: React.FC<IDropDown> = ({ title, children }) => {
 	}, []);
 
 	return (
-		<div className="relative" ref={dropdownRef}>
+		<div
+			className={`relative ${disabled && "cursor-not-allowed"}`}
+			ref={dropdownRef}
+		>
 			<div
-				className={`min-w-[250px]  flex items-center justify-between gap-3 px-8 py-4 border-[1px] rounded-lg  border-[#000] dark:border-white cursor-pointer`}
+				className={`min-w-[250px]  flex items-center justify-between gap-3 px-8 py-4 border-[1px] rounded-lg  border-[#000] dark:border-white cursor-pointer ${
+					disabled && "cursor-not-allowed pointer-events-none"
+				}`}
 				onClick={toggleMenu}
 			>
 				<p>{title}</p>

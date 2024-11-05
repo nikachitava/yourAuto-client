@@ -41,6 +41,10 @@ const VehiclesContent = () => {
 			filtered = filtered.filter((vehicle) => brand === vehicle.brand);
 		}
 
+		if (model) {
+			filtered = filtered.filter((vehicle) => model === vehicle.model);
+		}
+
 		if (status) {
 			filtered = filtered.filter((vehicle) => status === vehicle.status);
 		}
