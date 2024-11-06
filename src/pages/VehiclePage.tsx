@@ -109,6 +109,7 @@ const VehiclePage = () => {
 						</span>
 					</h1>
 					<VehicleOwnerCard
+						userID={vehicle.owner._id}
 						name={vehicle.owner.name}
 						surname={vehicle.owner.surname}
 						phone={vehicle.owner.phone}

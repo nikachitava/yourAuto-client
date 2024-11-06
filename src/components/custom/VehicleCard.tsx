@@ -42,7 +42,7 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 			<img
 				src={`http://localhost:3000${image}`}
 				alt=""
-				className="rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-125"
+				className="rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-125 w-full h-[300px]"
 			/>
 			<div className="mt-4">
 				<div className="flex items-center justify-between">
