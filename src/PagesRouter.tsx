@@ -5,7 +5,6 @@ import AuthLayout from "./layouts/AuthLayout";
 import Auth from "./pages/Auth";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import About from "./pages/About";
 import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import VehiclePage from "./pages/VehiclePage";
@@ -18,7 +17,6 @@ const PagesRouter = () => {
 			{/* Default Layout */}
 			<Route element={<DefaultLayout />}>
 				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
 				<Route
 					path="/addvehicle"
 					element={<ProtectedRoute element={AddVehiclePage} />}
