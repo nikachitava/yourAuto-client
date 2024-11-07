@@ -40,7 +40,7 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 			onClick={handleCardClick}
 		>
 			<img
-				src={`http://localhost:3000${image}`}
+				src={`https://yourauto-server.onrender.com${image}`}
 				alt=""
 				className="rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-125 w-full h-[300px]"
 			/>
