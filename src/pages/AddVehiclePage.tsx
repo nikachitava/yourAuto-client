@@ -20,6 +20,9 @@ import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { VehicleBrands } from "@/Types/IVehicle";
 import { useNavigate } from "react-router-dom";
 
+import uploadImageToFirebase from "@/firebase/uploadImage";
+import LoaderSpiiner from "@/components/custom/LoaderSpiiner";
+
 const formSchema = z.object({
 	title: z.string().min(2).max(50),
 	brand: z.string().min(2).max(50),
@@ -57,6 +60,7 @@ const AddVehiclePage = () => {
 	});
 
 	const brandValue = form.watch("brand");
+	const isSubmitting = form.formState.isSubmitting;
 
 	const { currentUser } = useContext(AuthorizationContext);
 	const [modelOptions, setModelOptions] = useState<string[]>([]);
@@ -93,7 +97,8 @@ const AddVehiclePage = () => {
 			newVehicleData.append("description", values.description);
 
 			if (values.image) {
-				newVehicleData.append("image", values.image);
+				const downloadUrl = await uploadImageToFirebase(values.image);
+				newVehicleData.append("image", downloadUrl);
 			}
 
 			await useAxios.post("/vehicle", newVehicleData);
@@ -209,7 +214,7 @@ const AddVehiclePage = () => {
 				/>
 
 				<Button type="submit" className="w-full">
-					Submit
+					{isSubmitting ? <LoaderSpiiner /> : "Submit"}
 				</Button>
 			</form>
 		</Form>

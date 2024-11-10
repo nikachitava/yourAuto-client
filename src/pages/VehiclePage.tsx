@@ -65,7 +65,7 @@ const VehiclePage = () => {
 
 			<div className="flex flex-col gap-4 lg:flex-row">
 				<img
-					src={`http://localhost:3000${vehicle.image}`}
+					src={vehicle.image}
 					alt=""
 					className="rounded-sm flex-1 max-h-[400px] shadow-2xl"
 				/>

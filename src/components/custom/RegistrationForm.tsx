@@ -51,12 +51,15 @@ const RegistrationForm: React.FC<IRegistrationFormProps> = ({
 			),
 		});
 
+	const navigate = useNavigate();
+
 	const createUser = async (values: z.infer<typeof formSchema>) => {
 		try {
 			const newUser = await useAxios.post("/users", values);
 			if (newUser) {
 				popUpToast();
 			}
+			navigate("/");
 		} catch (error) {
 			console.log(error);
 		}
