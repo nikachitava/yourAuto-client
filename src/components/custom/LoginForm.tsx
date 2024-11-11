@@ -6,7 +6,6 @@ import { Form } from "@/components/ui/form";
 import CustomFormField from "./CustomFormField";
 import { useContext } from "react";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
-import GoogleSingIn from "./GoogleSingIn";
 
 const formSchema = z.object({
 	email: z.string().min(2).max(50),
@@ -67,8 +66,6 @@ const LoginForm: React.FC<ILoginFormProps> = ({ handleLoginPage }) => {
 				>
 					I don't have an account
 				</span>
-
-				<GoogleSingIn />
 
 				<Button type="submit" className="w-full">
 					Submit
