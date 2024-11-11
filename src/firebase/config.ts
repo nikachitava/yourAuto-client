@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {getStorage } from 'firebase/storage'
+import { getStorage } from 'firebase/storage'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -13,3 +14,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const uploadImageToFirebaseStorage = getStorage(app)
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
+//project id for google auth project-873198325479

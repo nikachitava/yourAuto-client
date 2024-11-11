@@ -9,6 +9,7 @@ export interface IUser {
 
 export interface IAuthContextValues {
 	currentUser: IUser | null;
+	googleAuthuser: any;
 	loginUser: (data: { email: string; password: string }) => Promise<void>;
 	logOut: () => Promise<void>;
 }
