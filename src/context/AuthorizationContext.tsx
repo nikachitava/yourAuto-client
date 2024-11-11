@@ -1,13 +1,10 @@
-import { auth } from "@/firebase/config";
 import { useAxios } from "@/hooks/useAxios";
 import { IAuthContextValues, IUser } from "@/Types/IAuthorization";
-import { onAuthStateChanged } from "firebase/auth";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AUTHORZATION_CONTEXT_DEFAULT_VALUES = {
 	currentUser: null,
-	googleAuthuser: null,
 	setCurrentUser: () => {},
 	loginUser: async () => {},
 	logOut: async () => {},
@@ -24,14 +21,6 @@ export const AuthorizationContextProvider: React.FC<{
 		JSON.parse(localStorage.getItem("user") || "null")
 	);
 
-	const [googleAuthuser, setGoogleAuthUser] = useState<any>(null);
-
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setGoogleAuthUser(user);
-		});
-		return () => unsubscribe();
-	}, []);
 	const navigate = useNavigate();
 
 	const loginUser = async (data: { email: string; password: string }) => {
@@ -63,7 +52,7 @@ export const AuthorizationContextProvider: React.FC<{
 
 	return (
 		<AuthorizationContext.Provider
-			value={{ currentUser, loginUser, logOut, googleAuthuser }}
+			value={{ currentUser, loginUser, logOut }}
 		>
 			{children}
 		</AuthorizationContext.Provider>
