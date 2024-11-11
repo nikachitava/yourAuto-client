@@ -1,6 +1,7 @@
 import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
 import { Button } from "@/components/ui/button";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { deleteImage } from "@/firebase/deleteImage";
 import { toast } from "@/hooks/use-toast";
 import { useAxios } from "@/hooks/useAxios";
 import { IVehicle } from "@/Types/IVehicle";
@@ -15,12 +16,14 @@ const VehiclePage = () => {
 	const { currentUser } = useContext(AuthorizationContext);
 
 	const isOwner = currentUser?._id === vehicle?.owner._id;
+	const imagePath = vehicle?.image;
 
 	const deleteVehicle = async () => {
 		if (!isOwner) return;
 
 		try {
 			await useAxios.delete(`/vehicle/${id}`);
+			if (imagePath) await deleteImage(imagePath);
 			navigate("/");
 			toast({
 				title: "Vehicle deleted successfully",
