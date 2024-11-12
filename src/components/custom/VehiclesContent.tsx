@@ -89,24 +89,27 @@ const VehiclesContent = () => {
 	]);
 
 	return (
-		<div className="container my-10 grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10">
-			{filteredVehicles.length !== 0 ? (
-				filteredVehicles.map((vehicle, index) => (
-					<Link to={`/vehicle/${vehicle._id}`} key={index}>
-						<VehicleCard
-							owner={vehicle.owner}
-							title={vehicle.title}
-							brand={vehicle.brand}
-							fuelType={vehicle.fuelType}
-							price={vehicle.price}
-							gearBox={vehicle.gearBox}
-							image={vehicle.image}
-						/>
-					</Link>
-				))
-			) : (
-				<h1>No vehicles founded for those filters!!!</h1>
-			)}
+		<div className="bg-white my-20 py-24 flex justify-center items-center rounded-3xl min-h-[250px]">
+			<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-[30px]">
+				{filteredVehicles.length !== 0 ? (
+					filteredVehicles.map((vehicle, index) => (
+						<Link to={`/vehicle/${vehicle._id}`} key={index}>
+							<VehicleCard
+								owner={vehicle.owner}
+								title={vehicle.title}
+								brand={vehicle.brand}
+								fuelType={vehicle.fuelType}
+								price={vehicle.price}
+								gearBox={vehicle.gearBox}
+								mileage={vehicle.mileage}
+								image={vehicle.image}
+							/>
+						</Link>
+					))
+				) : (
+					<h1>No vehicles founded for those filters!!!</h1>
+				)}
+			</div>
 		</div>
 	);
 };

@@ -7,9 +7,9 @@ interface IFilterItemProps {
 
 const FilterItem: React.FC<IFilterItemProps> = ({ title, onClick }) => {
 	return (
-		<div className="bg-slate-800 text-white px-6 py-2 rounded-md flex items-center gap-3 max-w-[500px]">
+		<div className="bg-white text-mainColor px-2 rounded-3xl flex items-center gap-1 text-[12]">
 			{title}
-			<IoClose size={20} className="cursor-pointer" onClick={onClick} />
+			<IoClose size={15} className="cursor-pointer" onClick={onClick} />
 		</div>
 	);
 };

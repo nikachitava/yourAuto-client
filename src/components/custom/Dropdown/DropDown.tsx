@@ -40,7 +40,7 @@ const DropDown: React.FC<IDropDown> = ({ title, children, disabled }) => {
 			ref={dropdownRef}
 		>
 			<div
-				className={`min-w-[250px]  flex items-center justify-between gap-3 px-8 py-4 border-[1px] rounded-lg  border-[#000] dark:border-white cursor-pointer ${
+				className={`min-w-[180px] flex items-center justify-between gap-3 px-8 py-4 cursor-pointer ${
 					disabled && "cursor-not-allowed pointer-events-none"
 				}`}
 				onClick={toggleMenu}

@@ -3,7 +3,7 @@ import { MdMenuOpen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { SlLogin } from "react-icons/sl";
-import { ModeToggle } from "./mode-toggle";
+// import { ModeToggle } from "./mode-toggle";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { CiLogout } from "react-icons/ci";
 
@@ -26,7 +26,7 @@ const NavBar = () => {
 	const { currentUser, logOut } = useContext(AuthorizationContext);
 
 	return (
-		<div className="container max-w-full bg-blue-400 flex justify-between items-center py-2 relative">
+		<div className="container max-w-full bg-mainColor flex justify-between items-center py-10 relative">
 			<div
 				className={`absolute h-screen w-full top-0 left-0 bg-slate-700 transition-all duration-500 z-10 ${
 					isMenuOpen ? "block" : "hidden"
@@ -46,19 +46,21 @@ const NavBar = () => {
 			</div>
 
 			<Link to={"/"}>
-				<h1 className="font-bold text-2xl">
-					your<span className="text-orange-500">A</span>uto
-				</h1>
+				<h1 className="font-bold text-2xl text-white">yourAuto</h1>
 			</Link>
 			<div className="block md:hidden">
 				<MdMenuOpen
 					size={24}
 					className="cursor-pointer"
+					color="white"
 					onClick={toggleMenu}
 				/>
 			</div>
 			<div className="hidden md:block">
 				<ul className="flex justify-center items-center gap-6 text-white">
+					<li className="text-[15px] font-medium">
+						<Link to={"/"}>Home</Link>
+					</li>
 					<li>
 						{currentUser ? (
 							<CiLogout
@@ -68,20 +70,20 @@ const NavBar = () => {
 								onClick={logOut}
 							/>
 						) : (
-							<Link to={"/login"}>
-								<SlLogin
-									size={24}
-									className="cursor-pointer"
-									color="black"
-								/>
+							<Link
+								to={"/login"}
+								className="flex items-center gap-2"
+							>
+								<SlLogin size={15} className="cursor-pointer" />
+								<span className="text-[15px] font-medium">
+									Sign in
+								</span>
 							</Link>
 						)}
 					</li>
 					{currentUser && (
-						<li>
-							<Link to={"/addvehicle"}>
-								<p className="cursor-pointer">Add Vehicle</p>
-							</Link>
+						<li className="bg-white text-mainColor rounded-3xl py-2 px-6">
+							<Link to={"/addvehicle"}>Submit Listing</Link>
 						</li>
 					)}
 					{currentUser && (
@@ -91,9 +93,9 @@ const NavBar = () => {
 							</Link>
 						</li>
 					)}
-					<li>
+					{/* <li>
 						<ModeToggle />
-					</li>
+					</li> */}
 				</ul>
 			</div>
 		</div>

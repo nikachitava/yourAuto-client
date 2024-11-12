@@ -31,6 +31,7 @@ export interface IVehicleCardProps {
 	fuelType: string;
 	price: string;
 	gearBox: string;
+    mileage: string;
 	image?: string;
 }
 

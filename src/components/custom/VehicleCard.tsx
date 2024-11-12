@@ -11,6 +11,7 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 	fuelType,
 	price,
 	gearBox,
+	mileage,
 	image,
 }) => {
 	const { toast } = useToast();
@@ -36,30 +37,45 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 
 	return (
 		<div
-			className="w-full md:min-w-[400px] lg:max-w-[550px] bg-white p-4 rounded-md cursor-pointer  dark:bg-lightblack dark:text-greytext"
+			className="w-[327px] rounded-md overflow-hidden"
 			onClick={handleCardClick}
 		>
 			<img
 				src={image}
-				alt=""
-				className="rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-125 w-full h-[300px]"
+				alt={image}
+				className="w-full h-[218px] object-fill"
 			/>
-			<div className="mt-4">
+			<div className="flex flex-col gap-4 px-8 py-4 border-[1px] border-[#E9E9E9]">
+				<h1 className="text-lg font-medium ">
+					{title.substring(0, 25)}
+				</h1>
+				<h3>{brand}</h3>
+				<div className="flex h-[1px] bg-[#E9E9E9]"></div>
 				<div className="flex items-center justify-between">
-					<h1 className="text-xl font-bold">{title}</h1>
-					<p>{price}$</p>
+					<div className="flex flex-col items-center gap-2 justify-center">
+						<img src="/images/icons/mileage.svg" />
+						<h4>{mileage.slice(0, mileage.indexOf("(")).trim()}</h4>
+					</div>
+					<div className="flex flex-col items-center gap-2 justify-center">
+						<img src="/images/icons/fuel.svg" />
+						<h4>
+							{fuelType.slice(0, fuelType.indexOf("(")).trim()}
+						</h4>
+					</div>
+					<div className="flex flex-col items-center gap-2 justify-center">
+						<img src="/images/icons/transmision.svg" />
+						<h4>{gearBox.slice(0, gearBox.indexOf("(")).trim()}</h4>
+					</div>
 				</div>
-				<hr />
-				<div className="flex items-center gap-4 mt-2">
-					<p className="text-[12px] px-4 py-2 bg-slate-300  rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						{brand}
-					</p>
-					<p className="text-[12px] px-4 py-2 bg-slate-300 rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						{fuelType}
-					</p>
-					<p className="text-[12px] px-4 py-2 bg-slate-300 rounded-xl text-black dark:bg-darkblack dark:text-greytext font-bold">
-						{gearBox}
-					</p>
+				<div className="flex h-[1px] bg-[#E9E9E9]"></div>
+				<div className="flex items-center justify-between">
+					<h2 className="font-bold text-xl">${price}</h2>
+					<div className="flex items-center gap-2">
+						<span className="text-[#405FF2] font-medium">
+							View Details
+						</span>
+						<img src="/images/icons/arrow.svg" alt="arrow.svg" />
+					</div>
 				</div>
 			</div>
 		</div>

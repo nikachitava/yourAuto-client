@@ -28,38 +28,35 @@ const SearchFilter = () => {
 			setModelOptions([]);
 		}
 	}, [brand]);
-
 	return (
-		<div className="container mt-10 max-w-full ">
-			<div className="dark:border-2 dark:border-white p-10 rounded-xl shadow-md ">
-				<div className="bg-white dark:bg-[var(--background)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-					<DropDown title={"Brand"}>
-						<BrandContent content={vehicleBrands} />
-					</DropDown>
-
-					<DropDown title={"Model"} disabled={brand ? false : true}>
-						<ModelsContent content={modelOptions} />
-					</DropDown>
-
-					<DropDown title="Status">
-						<CarStatusContent content={carStatus} />
-					</DropDown>
-
-					<DropDown title="Fuel">
-						<FuelTypeContent content={fuelTypes} />
-					</DropDown>
-
-					<DropDown title="Year">
-						<YearContent />
-					</DropDown>
-
-					<DropDown title="Price">
-						<DropDownInputValues />
-					</DropDown>
-				</div>
-				<div className="mt-6">
-					<FilterBar />
-				</div>
+		<div className="container flex flex-col items-center  justify-center">
+			<div className="max-w-[1170px] grid grid-cols-2 w-full gap-10 p-6 xl:flex xl:items-center xl:justify-between xl:gap-0 xl:p-3 bg-white rounded-[80px]">
+				<DropDown title={"Brand"}>
+					<BrandContent content={vehicleBrands} />
+				</DropDown>
+				<div className="h-[50px] w-[1px] bg-[#E9E9E9] hidden xl:block"></div>
+				<DropDown title={"Model"} disabled={brand ? false : true}>
+					<ModelsContent content={modelOptions} />
+				</DropDown>
+				<div className="h-[50px] w-[1px] bg-[#E9E9E9] hidden xl:block"></div>
+				<DropDown title="Status">
+					<CarStatusContent content={carStatus} />
+				</DropDown>
+				<div className="h-[50px] w-[1px] bg-[#E9E9E9] hidden xl:block"></div>
+				<DropDown title="Fuel">
+					<FuelTypeContent content={fuelTypes} />
+				</DropDown>
+				<div className="h-[50px] w-[1px] bg-[#E9E9E9] hidden xl:block"></div>
+				<DropDown title="Year">
+					<YearContent />
+				</DropDown>
+				<div className="h-[50px] w-[1px] bg-[#E9E9E9] hidden xl:block"></div>
+				<DropDown title="Price">
+					<DropDownInputValues />
+				</DropDown>
+			</div>
+			<div className="mt-2 px-4">
+				<FilterBar />
 			</div>
 		</div>
 	);

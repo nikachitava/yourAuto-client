@@ -7,9 +7,9 @@ const Home = () => {
 	const { currentUser } = useContext(AuthorizationContext);
 	return (
 		<div>
-			<div className="container mt-8">
+			<div className="container my-8">
 				{currentUser && (
-					<h1 className="dark:text-white text-2xl text-darktext font-bold">
+					<h1 className="text-white text-2xl  font-bold">
 						Welcome back, {currentUser.name}
 					</h1>
 				)}

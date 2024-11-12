@@ -13,6 +13,9 @@ export default {
 					xl: "5rem",
 				},
 			},
+			fontFamily: {
+				DMSans: ["DM Sans", "sans-serif"],
+			},
 
 			screens: {
 				"2xl": "1920px",
@@ -37,6 +40,7 @@ export default {
 				sm: "calc(var(--radius) - 4px)",
 			},
 			colors: {
+				mainColor: "#050B20",
 				darktext: "#021526",
 				lighttext: "#2D3648",
 				greytext: "#021526B2",
