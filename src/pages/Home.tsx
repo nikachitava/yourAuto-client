@@ -1,7 +1,11 @@
 import SearchFilter from "@/components/custom/SearchFilter";
-import VehiclesContent from "@/components/custom/VehiclesContent";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
+import React, { Suspense } from "react";
 import { useContext } from "react";
+
+const LazyVehiclesContent = React.lazy(
+	() => import("@/components/custom/VehiclesContent")
+);
 
 const Home = () => {
 	const { currentUser } = useContext(AuthorizationContext);
@@ -15,7 +19,9 @@ const Home = () => {
 				)}
 			</div>
 			<SearchFilter />
-			<VehiclesContent />
+			<Suspense fallback={<div>Loading Vehicles...</div>}>
+				<LazyVehiclesContent />
+			</Suspense>
 		</div>
 	);
 };

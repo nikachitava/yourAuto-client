@@ -269,7 +269,7 @@ const AddVehiclePage = () => {
 					placeholder="Vehicle Images"
 				/>
 
-				<Button type="submit" className="w-full">
+				<Button type="submit" className="w-full bg-buttonColor">
 					{isSubmitting ? <LoaderSpiiner /> : "Submit"}
 				</Button>
 			</form>
