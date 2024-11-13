@@ -1,4 +1,6 @@
+import CarOverviewItem from "@/components/custom/CarOverviewItem";
 import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
+import VehicleTagBar from "@/components/custom/VehicleTagBar";
 import { Button } from "@/components/ui/button";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { deleteImage } from "@/firebase/deleteImage";
@@ -52,77 +54,148 @@ const VehiclePage = () => {
 		else navigate("/");
 	}, []);
 
+	const formatPrice = (price: string) => {
+		return new Intl.NumberFormat("en-US", {
+			style: "currency",
+			currency: "USD",
+		}).format(Number(price));
+	};
+
 	if (!vehicle) return null;
 
 	return (
-		<div className="container mt-10">
-			{isOwner && (
-				<div className="my-10">
-					<h1>It's your vehicle</h1>
-					<div className="flex gap-4 items-center mt-2">
-						<Button onClick={editVehicle}>EDIT</Button>
-						<Button onClick={deleteVehicle}>DELETE</Button>
+		<div className="w-full bg-white rounded-3xl">
+			<div className="container flex flex-col justify-center my-10 py-40 space-y-10">
+				<div className="space-y-4 flex flex-col items-start justify-between xl:flex-row xl:items-center">
+					<div className="space-y-4">
+						<h1 className="text-mainColor font-bold text-5xl">
+							{vehicle.title}
+						</h1>
+						<div className="space-x-3">
+							<VehicleTagBar
+								image="/images/icons/year.svg"
+								title={vehicle.year}
+							/>
+							<VehicleTagBar
+								image="/images/icons/mileage.svg"
+								title={vehicle.mileage}
+							/>
+							<VehicleTagBar
+								image="/images/icons/transmision.svg"
+								title={vehicle.gearBox}
+							/>
+							<VehicleTagBar
+								image="/images/icons/fuel.svg"
+								title={vehicle.fuelType}
+							/>
+						</div>
 					</div>
+					<h1 className="text-mainColor font-bold text-4xl">
+						{formatPrice(vehicle.price)}
+					</h1>
 				</div>
-			)}
-
-			<div className="flex flex-col gap-4 lg:flex-row">
-				<img
-					src={vehicle.image}
-					alt=""
-					className="rounded-sm flex-1 max-h-[400px] shadow-2xl"
-				/>
-				<div className="flex-1 flex flex-col space-y-2 justify-between">
-					<h1 className="text-2xl font-bold text-white">
-						{vehicle.title}
-					</h1>
-
-					<h1 className="text-3xl font-bold text-white">
-						{vehicle.price}$
-					</h1>
-
-					<h1 className="text-white">
-						Factory Year:{" "}
-						<span className="text-lg font-bold text-white">
-							{vehicle.year}
-						</span>
-					</h1>
-					<h1 className="text-white">
-						GearBox:{" "}
-						<span className="text-lg font-bold text-white">
-							{vehicle.gearBox}
-						</span>
-					</h1>
-					<h1 className="text-white">
-						Fuel Type:{" "}
-						<span className="text-lg font-bold text-white">
-							{vehicle.fuelType}
-						</span>
-					</h1>
-					<h1 className="text-white">
-						Mileage:{" "}
-						<span className="text-lg font-bold text-white">
-							{vehicle.mileage}
-						</span>
-					</h1>
-					<h1 className="text-white">
-						Engine:{" "}
-						<span className="text-lg font-bold text-white">
-							{vehicle.engine}
-						</span>
-					</h1>
-					<VehicleOwnerCard
-						userID={vehicle.owner._id}
-						name={vehicle.owner.name}
-						surname={vehicle.owner.surname}
-						phone={vehicle.owner.phone}
+				<div className="grid grid-cols-2 xl:grid-cols-[2fr_1fr_1fr_1fr] gap-4">
+					<img
+						src={vehicle.image}
+						alt=""
+						className="col-span-2 xl:col-span-2 row-span-2 object-cover size-full"
+					/>
+					<img
+						src="/images/bmw428.jpg"
+						alt="Additional Image"
+						className="object-cover size-full"
+					/>
+					<img
+						src="/images/bmw4281.jpg"
+						alt="Additional Image"
+						className="object-cover size-full"
+					/>
+					<img
+						src="/images/camry_se.jpg"
+						alt="Additional Image"
+						className="object-coverc size-full"
+					/>
+					<img
+						src="/images/bmw4283.jpg"
+						alt="Additional Image"
+						className="object-cover size-full"
 					/>
 				</div>
-			</div>
-			<div className="mt-8">
-				<h1 className="text-white">
-					Description: <span>{vehicle.description}</span>
+				<div>
+					<h1 className="text-mainColor font-medium text-2xl mb-8">
+						Car Overview
+					</h1>
+					<div className="max-w-[1000px] flex items-center justify-between gap-10">
+						<div className="space-y-3">
+							<CarOverviewItem
+								image={"/images/icons/body.svg"}
+								header="Body"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/mileage.svg"}
+								header="Mileage"
+								title={vehicle.mileage}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/fuel.svg"}
+								header="Fuel Type"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/year.svg"}
+								header="Year"
+								title={vehicle.year}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/transmision.svg"}
+								header="Transmision"
+								title={vehicle.gearBox}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/driveType.svg"}
+								header="Body"
+								title={vehicle.type}
+							/>
+						</div>
+						<div className="space-y-3">
+							<CarOverviewItem
+								image={"/images/icons/condition.svg"}
+								header="Condition"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/engine.svg"}
+								header="Engine"
+								title={vehicle.engine}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/door.svg"}
+								header="Door"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/cylinder.svg"}
+								header="Cylinder"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/color.svg"}
+								header="Color"
+								title={vehicle.type}
+							/>
+							<CarOverviewItem
+								image={"/images/icons/vin.svg"}
+								header="VIN"
+								title={vehicle.type}
+							/>
+						</div>
+					</div>
+				</div>
+				<h1 className="text-mainColor font-medium text-2xl mb-8">
+					Description
 				</h1>
+				<p>{vehicle.description}</p>
 			</div>
 		</div>
 	);

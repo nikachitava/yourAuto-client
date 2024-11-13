@@ -82,3 +82,8 @@ input[type="number"] {
 * {
 	font-family: "DM sans";
 }
+
+.filter-blue {
+	filter: invert(29%) sepia(75%) saturate(5122%) hue-rotate(225deg)
+		brightness(100%) contrast(102%);
+}
