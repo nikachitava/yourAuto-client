@@ -38,7 +38,14 @@ const formSchema = z.object({
 	mileage: z.string().min(2).max(50),
 	engine: z.string().min(2).max(50),
 	gearBox: z.string().min(1, "gearBox is required").max(50),
-	description: z.string().min(10).max(500),
+	description: z.string().min(10).max(1500),
+	driveType: z.string().min(2).max(50),
+	body: z.string().min(2).max(50),
+	condition: z.string().min(2).max(50),
+	door: z.string().min(2).max(50),
+	cylinder: z.string().min(2).max(50),
+	color: z.string().min(2).max(50),
+	vin: z.string().min(2).max(50),
 	image: z.instanceof(File).nullable().optional().default(null),
 });
 
@@ -182,6 +189,52 @@ const AddVehiclePage = () => {
 						name="mileage"
 						label="Mileage"
 						placeholder="Mileage"
+					/>
+				</div>
+
+				<div className="grid grid-cols-3 gap-8">
+					<CustomFormField
+						control={form.control}
+						name="driveType"
+						label="Drive type"
+						placeholder="Vehicle drive type"
+					/>
+
+					<CustomFormField
+						control={form.control}
+						name="condition"
+						label="Condtion"
+						placeholder="Vehicle condtion"
+					/>
+
+					<CustomFormField
+						control={form.control}
+						name="door"
+						label="Door"
+						placeholder="Door"
+					/>
+				</div>
+
+				<div className="grid grid-cols-3 gap-8">
+					<CustomFormField
+						control={form.control}
+						name="cylinder"
+						label="Cylinder"
+						placeholder="Vehicle cylinder"
+					/>
+
+					<CustomFormField
+						control={form.control}
+						name="color"
+						label="Color"
+						placeholder="Vehicle color"
+					/>
+
+					<CustomFormField
+						control={form.control}
+						name="vin"
+						label="Vin Code"
+						placeholder="Vehicle vin code"
 					/>
 				</div>
 

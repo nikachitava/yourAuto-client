@@ -1,13 +1,13 @@
 import CarOverviewItem from "@/components/custom/CarOverviewItem";
-import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
+// import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
 import VehicleTagBar from "@/components/custom/VehicleTagBar";
-import { Button } from "@/components/ui/button";
-import { AuthorizationContext } from "@/context/AuthorizationContext";
-import { deleteImage } from "@/firebase/deleteImage";
-import { toast } from "@/hooks/use-toast";
+// import { Button } from "@/components/ui/button";
+// import { AuthorizationContext } from "@/context/AuthorizationContext";
+// import { deleteImage } from "@/firebase/deleteImage";
+// import { toast } from "@/hooks/use-toast";
 import { useAxios } from "@/hooks/useAxios";
 import { IVehicle } from "@/Types/IVehicle";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const VehiclePage = () => {
@@ -15,30 +15,30 @@ const VehiclePage = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 
-	const { currentUser } = useContext(AuthorizationContext);
+	// const { currentUser } = useContext(AuthorizationContext);
 
-	const isOwner = currentUser?._id === vehicle?.owner._id;
-	const imagePath = vehicle?.image;
+	// const isOwner = currentUser?._id === vehicle?.owner._id;
+	// const imagePath = vehicle?.image;
 
-	const deleteVehicle = async () => {
-		if (!isOwner) return;
+	// const deleteVehicle = async () => {
+	// 	if (!isOwner) return;
 
-		try {
-			await useAxios.delete(`/vehicle/${id}`);
-			if (imagePath) await deleteImage(imagePath);
-			navigate("/");
-			toast({
-				title: "Vehicle deleted successfully",
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	// 	try {
+	// 		await useAxios.delete(`/vehicle/${id}`);
+	// 		if (imagePath) await deleteImage(imagePath);
+	// 		navigate("/");
+	// 		toast({
+	// 			title: "Vehicle deleted successfully",
+	// 		});
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
 
-	const editVehicle = () => {
-		if (!isOwner) return;
-		navigate(`/editvehicle/${id}`);
-	};
+	// const editVehicle = () => {
+	// 	if (!isOwner) return;
+	// 	navigate(`/editvehicle/${id}`);
+	// };
 
 	useEffect(() => {
 		const fetchVehicleData = async () => {
@@ -87,6 +87,10 @@ const VehiclePage = () => {
 							<VehicleTagBar
 								image="/images/icons/fuel.svg"
 								title={vehicle.fuelType}
+							/>
+							<VehicleTagBar
+								image="/images/icons/body.svg"
+								title={vehicle.model}
 							/>
 						</div>
 					</div>
@@ -155,7 +159,7 @@ const VehiclePage = () => {
 							<CarOverviewItem
 								image={"/images/icons/driveType.svg"}
 								header="Body"
-								title={vehicle.body}
+								title={vehicle.type}
 							/>
 						</div>
 						<div className="space-y-3">

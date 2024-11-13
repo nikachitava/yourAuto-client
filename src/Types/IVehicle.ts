@@ -14,7 +14,6 @@ export interface IVehicle {
         gearBox: string;
         description: string;
         driveType: string;
-        body: string;
         condition: string;
         door: string;
         cylinder: string;
