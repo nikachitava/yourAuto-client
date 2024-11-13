@@ -15,7 +15,7 @@ const CarOverviewItem: React.FC<ICarOverviewItemProps> = ({
 				<img src={image} alt={image} />
 				<p>{header}</p>
 			</div>
-			<p className="font-bold">{title}</p>
+			<p className="font-bold">{title ? title : "Not Mentioned"}</p>
 		</div>
 	);
 };

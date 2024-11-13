@@ -125,7 +125,7 @@ const VehiclePage = () => {
 					<h1 className="text-mainColor font-medium text-2xl mb-8">
 						Car Overview
 					</h1>
-					<div className="max-w-[1000px] flex items-center justify-between gap-10">
+					<div className="max-w-[1000px] flex flex-col xl:flex-row xl:items-center justify-between gap-10">
 						<div className="space-y-3">
 							<CarOverviewItem
 								image={"/images/icons/body.svg"}
@@ -155,14 +155,14 @@ const VehiclePage = () => {
 							<CarOverviewItem
 								image={"/images/icons/driveType.svg"}
 								header="Body"
-								title={vehicle.type}
+								title={vehicle.body}
 							/>
 						</div>
 						<div className="space-y-3">
 							<CarOverviewItem
 								image={"/images/icons/condition.svg"}
 								header="Condition"
-								title={vehicle.type}
+								title={vehicle.condition}
 							/>
 							<CarOverviewItem
 								image={"/images/icons/engine.svg"}
@@ -172,22 +172,22 @@ const VehiclePage = () => {
 							<CarOverviewItem
 								image={"/images/icons/door.svg"}
 								header="Door"
-								title={vehicle.type}
+								title={vehicle.door}
 							/>
 							<CarOverviewItem
 								image={"/images/icons/cylinder.svg"}
 								header="Cylinder"
-								title={vehicle.type}
+								title={vehicle.cylinder}
 							/>
 							<CarOverviewItem
 								image={"/images/icons/color.svg"}
 								header="Color"
-								title={vehicle.type}
+								title={vehicle.color}
 							/>
 							<CarOverviewItem
 								image={"/images/icons/vin.svg"}
 								header="VIN"
-								title={vehicle.type}
+								title={vehicle.vin}
 							/>
 						</div>
 					</div>

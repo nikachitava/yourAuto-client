@@ -13,6 +13,13 @@ export interface IVehicle {
         engine: string;
         gearBox: string;
         description: string;
+        driveType: string;
+        body: string;
+        condition: string;
+        door: string;
+        cylinder: string;
+        color: string;
+        vin: string;
         image?: string;
 }
 
