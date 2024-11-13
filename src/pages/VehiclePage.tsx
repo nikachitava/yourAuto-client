@@ -73,41 +73,41 @@ const VehiclePage = () => {
 					className="rounded-sm flex-1 max-h-[400px] shadow-2xl"
 				/>
 				<div className="flex-1 flex flex-col space-y-2 justify-between">
-					<h1 className="text-2xl font-bold text-darkblack dark:text-white">
+					<h1 className="text-2xl font-bold text-white">
 						{vehicle.title}
 					</h1>
 
-					<h1 className="text-xl font-bold text-darkblack dark:text-white">
+					<h1 className="text-3xl font-bold text-white">
 						{vehicle.price}$
 					</h1>
 
-					<h1>
+					<h1 className="text-white">
 						Factory Year:{" "}
-						<span className="text-darkblack text-lg font-bold dark:text-white">
+						<span className="text-lg font-bold text-white">
 							{vehicle.year}
 						</span>
 					</h1>
-					<h1>
+					<h1 className="text-white">
 						GearBox:{" "}
-						<span className="text-darkblack text-lg font-bold dark:text-white">
+						<span className="text-lg font-bold text-white">
 							{vehicle.gearBox}
 						</span>
 					</h1>
-					<h1>
+					<h1 className="text-white">
 						Fuel Type:{" "}
-						<span className="text-darkblack text-lg font-bold dark:text-white">
+						<span className="text-lg font-bold text-white">
 							{vehicle.fuelType}
 						</span>
 					</h1>
-					<h1>
+					<h1 className="text-white">
 						Mileage:{" "}
-						<span className="text-darkblack text-lg font-bold dark:text-white">
+						<span className="text-lg font-bold text-white">
 							{vehicle.mileage}
 						</span>
 					</h1>
-					<h1>
+					<h1 className="text-white">
 						Engine:{" "}
-						<span className="text-darkblack text-lg font-bold dark:text-white">
+						<span className="text-lg font-bold text-white">
 							{vehicle.engine}
 						</span>
 					</h1>
@@ -120,7 +120,7 @@ const VehiclePage = () => {
 				</div>
 			</div>
 			<div className="mt-8">
-				<h1>
+				<h1 className="text-white">
 					Description: <span>{vehicle.description}</span>
 				</h1>
 			</div>

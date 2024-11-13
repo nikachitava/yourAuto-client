@@ -3,7 +3,6 @@ import { MdMenuOpen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { SlLogin } from "react-icons/sl";
-// import { ModeToggle } from "./mode-toggle";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { CiLogout } from "react-icons/ci";
 
@@ -61,12 +60,24 @@ const NavBar = () => {
 					<li className="text-[15px] font-medium">
 						<Link to={"/"}>Home</Link>
 					</li>
+					{currentUser && (
+						<li className="bg-buttonColor text-white rounded-3xl py-2 px-6">
+							<Link to={"/addvehicle"}>Submit Listing</Link>
+						</li>
+					)}
+					{currentUser && (
+						<li>
+							<Link to={`/profile/${currentUser._id}`}>
+								<p className="cursor-pointer">My Profile</p>
+							</Link>
+						</li>
+					)}
 					<li>
 						{currentUser ? (
 							<CiLogout
 								size={24}
 								className="cursor-pointer"
-								color="black"
+								color="white"
 								onClick={logOut}
 							/>
 						) : (
@@ -81,21 +92,6 @@ const NavBar = () => {
 							</Link>
 						)}
 					</li>
-					{currentUser && (
-						<li className="bg-white text-mainColor rounded-3xl py-2 px-6">
-							<Link to={"/addvehicle"}>Submit Listing</Link>
-						</li>
-					)}
-					{currentUser && (
-						<li>
-							<Link to={`/profile/${currentUser._id}`}>
-								<p className="cursor-pointer">My Profile</p>
-							</Link>
-						</li>
-					)}
-					{/* <li>
-						<ModeToggle />
-					</li> */}
 				</ul>
 			</div>
 		</div>

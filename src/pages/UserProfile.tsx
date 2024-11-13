@@ -25,11 +25,14 @@ const UserProfile = () => {
 	return (
 		<section className="container grid grid-cols-3 gap-8 mt-20">
 			{vehicles.length === 0 ? (
-				<h1>This user don't have any vehicle</h1>
+				<h1 className="text-white text-2xl">
+					This user don't have any vehicle
+				</h1>
 			) : (
 				vehicles.map((vehicle, index) => (
 					<VehicleCard
 						key={index}
+						mileage={vehicle.mileage}
 						owner={vehicle.owner}
 						title={vehicle.title}
 						brand={vehicle.brand}

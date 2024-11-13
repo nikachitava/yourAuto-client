@@ -23,6 +23,7 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 		if (!currentUser) {
 			toast({
 				title: "You need to login first",
+				variant: "destructive",
 				action: (
 					<ToastAction
 						altText={"Login"}

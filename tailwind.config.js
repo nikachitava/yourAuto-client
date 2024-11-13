@@ -41,6 +41,7 @@ export default {
 			},
 			colors: {
 				mainColor: "#050B20",
+				buttonColor: "#405FF2",
 				darktext: "#021526",
 				lighttext: "#2D3648",
 				greytext: "#021526B2",

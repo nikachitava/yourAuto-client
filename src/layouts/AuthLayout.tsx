@@ -9,6 +9,7 @@ const AuthLayout: React.FC<layoutProps> = ({ children }) => {
 			<Link to={"/"}>
 				<IoMdArrowRoundBack
 					size={24}
+					color="white"
 					className="absolute top-10 left-20"
 				/>
 			</Link>

@@ -24,18 +24,21 @@ import uploadImageToFirebase from "@/firebase/uploadImage";
 import LoaderSpiiner from "@/components/custom/LoaderSpiiner";
 
 const formSchema = z.object({
-	title: z.string().min(2).max(50),
-	brand: z.string().min(2).max(50),
-	model: z.string().min(2).max(50),
-	type: z.string().min(2).max(50),
-	status: z.string().min(2).max(50),
-	fuelType: z.string().min(2).max(50),
+	title: z
+		.string()
+		.min(10, "Title must contain at least 10 character")
+		.max(30),
+	brand: z.string().min(1, "Brand is required").max(50),
+	model: z.string().min(1, "Model is required").max(50),
+	type: z.string().min(1, "Type is required").max(50),
+	status: z.string().min(1, "Status is required").max(50),
+	fuelType: z.string().min(1, "Fuel type is required").max(50),
 	year: z.string().min(1).max(4),
 	price: z.string().min(2).max(50),
 	mileage: z.string().min(2).max(50),
 	engine: z.string().min(2).max(50),
-	gearBox: z.string().min(2).max(50),
-	description: z.string().min(2).max(500),
+	gearBox: z.string().min(1, "gearBox is required").max(50),
+	description: z.string().min(10).max(500),
 	image: z.instanceof(File).nullable().optional().default(null),
 });
 
@@ -112,13 +115,13 @@ const AddVehiclePage = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md "
+				className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md text-white"
 			>
 				<CustomFormField
 					control={form.control}
 					name="title"
 					label="Title"
-					placeholder=""
+					placeholder="Title"
 				/>
 
 				<CustomSelect
