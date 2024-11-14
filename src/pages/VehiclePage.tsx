@@ -1,13 +1,13 @@
 import CarOverviewItem from "@/components/custom/CarOverviewItem";
 import VehicleOwnerCard from "@/components/custom/VehicleOwnerCard";
 import VehicleTagBar from "@/components/custom/VehicleTagBar";
-// import { Button } from "@/components/ui/button";
-// import { AuthorizationContext } from "@/context/AuthorizationContext";
-// import { deleteImage } from "@/firebase/deleteImage";
-// import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { AuthorizationContext } from "@/context/AuthorizationContext";
+import { deleteImage } from "@/firebase/deleteImage";
+import { toast } from "@/hooks/use-toast";
 import { useAxios } from "@/hooks/useAxios";
 import { IVehicle } from "@/Types/IVehicle";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const VehiclePage = () => {
@@ -15,30 +15,30 @@ const VehiclePage = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 
-	// const { currentUser } = useContext(AuthorizationContext);
+	const { currentUser } = useContext(AuthorizationContext);
 
-	// const isOwner = currentUser?._id === vehicle?.owner._id;
-	// const imagePath = vehicle?.image;
+	const isOwner = currentUser?._id === vehicle?.owner._id;
+	const imagePath = vehicle?.image;
 
-	// const deleteVehicle = async () => {
-	// 	if (!isOwner) return;
+	const deleteVehicle = async () => {
+		if (!isOwner) return;
 
-	// 	try {
-	// 		await useAxios.delete(`/vehicle/${id}`);
-	// 		if (imagePath) await deleteImage(imagePath);
-	// 		navigate("/");
-	// 		toast({
-	// 			title: "Vehicle deleted successfully",
-	// 		});
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
+		try {
+			await useAxios.delete(`/vehicle/${id}`);
+			if (imagePath) await deleteImage(imagePath);
+			navigate("/");
+			toast({
+				title: "Vehicle deleted successfully",
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-	// const editVehicle = () => {
-	// 	if (!isOwner) return;
-	// 	navigate(`/editvehicle/${id}`);
-	// };
+	const editVehicle = () => {
+		if (!isOwner) return;
+		navigate(`/editvehicle/${id}`);
+	};
 
 	useEffect(() => {
 		const fetchVehicleData = async () => {
@@ -66,6 +66,17 @@ const VehiclePage = () => {
 	return (
 		<div className="w-full bg-white rounded-3xl">
 			<div className="container flex flex-col justify-center my-10 py-40 space-y-10">
+				{isOwner && (
+					<div className="bg-red-600 px-6 py-4 space-y-2">
+						<h3 className="text-white font-medium">
+							It's your vehicle, you can edit or delete listing
+						</h3>
+						<div className="space-x-5">
+							<Button onClick={editVehicle}>EDIT</Button>
+							<Button onClick={deleteVehicle}>DELETE</Button>
+						</div>
+					</div>
+				)}
 				<div className="space-y-4 flex flex-col items-start justify-between xl:flex-row xl:items-center">
 					<div className="space-y-4">
 						<h1 className="text-mainColor font-bold text-5xl">
