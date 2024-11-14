@@ -46,12 +46,12 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 				alt={image}
 				className="w-full h-[218px] object-fill"
 			/>
-			<div className="flex flex-col gap-4 px-8 py-4 border-[1px] border-[#E9E9E9]">
+			<div className="flex flex-col gap-4 px-8 py-4 border-[1px] border-[#E9E9E9] bg-[#e9e9e9]">
 				<h1 className="text-lg font-medium ">
 					{title.substring(0, 25)}
 				</h1>
 				<h3>{brand}</h3>
-				<div className="flex h-[1px] bg-[#E9E9E9]"></div>
+				<div className="flex h-[1px] bg-mainColor"></div>
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col items-center gap-2 justify-center">
 						<img src="/images/icons/mileage.svg" />
@@ -68,7 +68,7 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 						<h4>{gearBox.slice(0, gearBox.indexOf("(")).trim()}</h4>
 					</div>
 				</div>
-				<div className="flex h-[1px] bg-[#E9E9E9]"></div>
+				<div className="flex h-[1px] bg-mainColor"></div>
 				<div className="flex items-center justify-between">
 					<h2 className="font-bold text-xl">${price}</h2>
 					<div className="flex items-center gap-2">

@@ -23,7 +23,7 @@ const UserProfile = () => {
 	}, [id]);
 
 	return (
-		<section className="container grid grid-cols-3 gap-8 mt-20">
+		<section className="container grid grid-cols-5 gap-8 my-20">
 			{vehicles.length === 0 ? (
 				<h1 className="text-white text-2xl">
 					This user don't have any vehicle
