@@ -39,18 +39,18 @@ const YearContent = () => {
 	};
 
 	return (
-		<div className="min-h-20 max-h-60  bg-[#ffffff] absolute w-full top-[60px] left-0 flex flex-col gap-4 z-10 p-4 dark:bg-[#353535] ">
+		<div className="min-h-20 bg-[#ffffff] absolute w-full top-[60px] left-0 flex flex-col gap-4 z-10 p-4 dark:bg-[#353535] ">
 			<h1 className="text-darktext font-bold dark:text-white">
-				Choose vehicle years
+				Vehicle years
 			</h1>
-			<div className="flex items-center justify-between gap-[15px]">
+			<div className="flex flex-col items-center justify-between gap-[15px]">
 				<div
 					className={`flex justify-between items-center w-[155px] border-[1px] p-[10px] rounded-md ${
 						error ? "border-[#F93B1D]" : "border-[#808A93]"
 					}`}
 				>
 					<input
-						placeholder="დან"
+						placeholder="from"
 						className="border-none outline-none w-[80%] bg-transparent"
 						type="number"
 						value={minValue}
@@ -63,7 +63,7 @@ const YearContent = () => {
 					}`}
 				>
 					<input
-						placeholder="მდე"
+						placeholder="to"
 						className="border-none outline-none w-[80%] bg-transparent"
 						type="number"
 						value={maxValue}
