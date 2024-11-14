@@ -32,6 +32,13 @@ const formSchema = z.object({
 	engine: z.string().min(2).max(50).optional(),
 	gearBox: z.string().min(2).max(50).optional(),
 	description: z.string().min(2).max(500).optional(),
+	driveType: z.string().min(2).max(50).optional(),
+	body: z.string().min(2).max(50).optional(),
+	condition: z.string().min(2).max(50).optional(),
+	door: z.string().min(2).max(50).optional(),
+	cylinder: z.string().min(2).max(50).optional(),
+	color: z.string().min(2).max(50).optional(),
+	vin: z.string().min(2).max(50).optional(),
 	image: z.instanceof(File).nullable().optional().default(null),
 });
 
@@ -58,6 +65,13 @@ const EditVehicleData = () => {
 					engine: vehicleData.data.engine,
 					gearBox: vehicleData.data.gearBox,
 					description: vehicleData.data.description,
+					driveType: vehicleData.data.driveType,
+					body: vehicleData.data.body,
+					condition: vehicleData.data.condition,
+					door: vehicleData.data.door,
+					cylinder: vehicleData.data.cylinder,
+					color: vehicleData.data.color,
+					vin: vehicleData.data.vin,
 					image: null,
 				});
 			} catch (error) {
@@ -84,6 +98,13 @@ const EditVehicleData = () => {
 			engine: "",
 			gearBox: "",
 			description: "",
+			driveType: "",
+			body: "",
+			condition: "",
+			door: "",
+			cylinder: "",
+			color: "",
+			vin: "",
 			image: null,
 		},
 	});
@@ -117,13 +138,13 @@ const EditVehicleData = () => {
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
-					className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md "
+					className="min-h-screen m-auto min-w-[500px] max-w-[1000px] space-y-8  shadow-lg px-4 py-6 rounded-md text-white"
 				>
 					<CustomFormField
 						control={form.control}
 						name="title"
 						label="Title"
-						placeholder=""
+						placeholder="Title"
 					/>
 
 					<CustomSelect
@@ -184,6 +205,75 @@ const EditVehicleData = () => {
 							name="mileage"
 							label="Mileage"
 							placeholder="Mileage"
+						/>
+					</div>
+
+					<div className="grid grid-cols-3 gap-8">
+						<CustomFormField
+							control={form.control}
+							name="driveType"
+							label="Drive type"
+							placeholder="Vehicle drive type"
+						/>
+
+						<CustomFormField
+							control={form.control}
+							name="condition"
+							label="Condtion"
+							placeholder="Vehicle condtion"
+						/>
+
+						<CustomFormField
+							control={form.control}
+							name="door"
+							label="Door"
+							placeholder="Door"
+						/>
+					</div>
+
+					<div className="grid grid-cols-3 gap-8">
+						<CustomFormField
+							control={form.control}
+							name="cylinder"
+							label="Cylinder"
+							placeholder="Vehicle cylinder"
+						/>
+
+						<CustomFormField
+							control={form.control}
+							name="color"
+							label="Color"
+							placeholder="Vehicle color"
+						/>
+
+						<CustomFormField
+							control={form.control}
+							name="vin"
+							label="Vin Code"
+							placeholder="Vehicle vin code"
+						/>
+					</div>
+
+					<CustomFormField
+						control={form.control}
+						name="engine"
+						label="Engine"
+						placeholder="Engine"
+					/>
+
+					<CustomSelect
+						control={form.control}
+						selectItems={gearboxTypes}
+						placeholder={"Gearbox"}
+						name="gearBox"
+					/>
+
+					<div className="grid w-full gap-1.5">
+						<Label htmlFor="message">Description</Label>
+						<Textarea
+							{...form.register("description")}
+							className="resize-none h-40"
+							placeholder="Type your vehicle description here."
 						/>
 					</div>
 

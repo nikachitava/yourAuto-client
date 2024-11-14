@@ -65,6 +65,13 @@ const AddVehiclePage = () => {
 			engine: "",
 			gearBox: "",
 			description: "",
+			driveType: "",
+			body: "",
+			condition: "",
+			door: "",
+			cylinder: "",
+			color: "",
+			vin: "",
 			image: null,
 		},
 	});
@@ -249,6 +256,7 @@ const AddVehiclePage = () => {
 					control={form.control}
 					selectItems={gearboxTypes}
 					placeholder={"Gearbox"}
+					label="GearBox"
 					name="gearBox"
 				/>
 
