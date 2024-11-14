@@ -37,15 +37,17 @@ const formSchema = z.object({
 	price: z.string().min(2).max(50),
 	mileage: z.string().min(2).max(50),
 	engine: z.string().min(2).max(50),
-	gearBox: z.string().min(1, "gearBox is required").max(50),
-	description: z.string().min(10).max(1500),
-	driveType: z.string().min(2).max(50),
-	body: z.string().min(2).max(50),
-	condition: z.string().min(2).max(50),
-	door: z.string().min(2).max(50),
-	cylinder: z.string().min(2).max(50),
-	color: z.string().min(2).max(50),
-	vin: z.string().min(2).max(50),
+	gearBox: z.string().min(1, "gearBox is required").max(500),
+	description: z
+		.string()
+		.min(10, "Description minimum lenght 10 symbol")
+		.max(1500),
+	driveType: z.string().min(2, "Drivetype minimum lenght 2 symbol").max(50),
+	condition: z.string().min(2, "Condition minimum lenght 2 symbol").max(50),
+	door: z.string().min(1, "Door is required").max(50),
+	cylinder: z.string().min(2, "Cylinder minimum lenght 2 symbol").max(50),
+	color: z.string().min(2, "Color minimum lenght 2 symbol").max(50),
+	vin: z.string().min(2, "Vincode minimum lenght 2 symbol").max(50),
 	image: z.instanceof(File).nullable().optional().default(null),
 });
 
@@ -66,7 +68,6 @@ const AddVehiclePage = () => {
 			gearBox: "",
 			description: "",
 			driveType: "",
-			body: "",
 			condition: "",
 			door: "",
 			cylinder: "",
@@ -75,6 +76,8 @@ const AddVehiclePage = () => {
 			image: null,
 		},
 	});
+
+	console.log(form.formState.errors);
 
 	const brandValue = form.watch("brand");
 	const isSubmitting = form.formState.isSubmitting;
@@ -96,6 +99,7 @@ const AddVehiclePage = () => {
 	const navigate = useNavigate();
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		console.log("asd");
 		try {
 			const newVehicleData = new FormData();
 
@@ -112,13 +116,24 @@ const AddVehiclePage = () => {
 			newVehicleData.append("engine", values.engine);
 			newVehicleData.append("gearBox", values.gearBox);
 			newVehicleData.append("description", values.description);
+			newVehicleData.append("driveType", values.driveType);
+			newVehicleData.append("condition", values.condition);
+			newVehicleData.append("door", values.door);
+			newVehicleData.append("cylinder", values.cylinder);
+			newVehicleData.append("color", values.color);
+			newVehicleData.append("vin", values.vin);
 
 			if (values.image) {
 				const downloadUrl = await uploadImageToFirebase(values.image);
 				newVehicleData.append("image", downloadUrl);
 			}
 
-			await useAxios.post("/vehicle", newVehicleData);
+			newVehicleData.forEach((value, key) => {
+				console.log(`${key}: ${value}`);
+			});
+
+			const response = await useAxios.post("/vehicle", newVehicleData);
+			console.log("Response:", response);
 			navigate("/");
 		} catch (error) {
 			console.error("Error adding vehicle:", error);
