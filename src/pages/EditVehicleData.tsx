@@ -170,9 +170,9 @@ const EditVehicleData = () => {
 			};
 
 			// for (let [key, value] of newVehicleData.entries()) {
-			// 	console.log(`${key}:`, value);
+			// 	console.log(`${key}:`, value);წ
 			// }
-			console.log(payload);
+			// console.log(payload);
 
 			await useAxios.patch(`/vehicle/${id}`, payload);
 			navigate("/");

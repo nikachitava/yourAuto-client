@@ -19,7 +19,7 @@ export interface IVehicle {
         cylinder: string;
         color: string;
         vin: string;
-        image?: string;
+        image: string[];
 }
 
 

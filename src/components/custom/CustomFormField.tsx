@@ -54,7 +54,6 @@ const CustomFormField = ({
 										field.onChange(null);
 									}
 								}}
-								// onChange={onChange}
 							/>
 						) : (
 							<Input

@@ -18,20 +18,28 @@ const VehiclePage = () => {
 	const { currentUser } = useContext(AuthorizationContext);
 
 	const isOwner = currentUser?._id === vehicle?.owner._id;
-	const imagePath = vehicle?.image;
+
+	const imagePaths = vehicle?.image;
 
 	const deleteVehicle = async () => {
 		if (!isOwner) return;
 
 		try {
 			await useAxios.delete(`/vehicle/${id}`);
-			if (imagePath) await deleteImage(imagePath);
+
+			if (imagePaths && imagePaths.length > 0) {
+				await Promise.all(
+					imagePaths.map((imagePath) => deleteImage(imagePath))
+				);
+			}
+
 			navigate("/");
-			toast({
-				title: "Vehicle deleted successfully",
-			});
 		} catch (error) {
-			console.log(error);
+			console.error("Error deleting vehicle or images:", error);
+			toast({
+				title: "Failed to delete vehicle",
+				variant: "destructive",
+			});
 		}
 	};
 
@@ -67,7 +75,7 @@ const VehiclePage = () => {
 		<div className="w-full bg-white rounded-3xl">
 			<div className="container flex flex-col justify-center my-10 py-40 space-y-10">
 				{isOwner && (
-					<div className="bg-red-600 px-6 py-4 space-y-2">
+					<div className="bg-red-600 px-6 py-4 space-y-2 rounded-md shadow-md">
 						<h3 className="text-white font-medium">
 							It's your vehicle, you can edit or delete listing
 						</h3>
@@ -110,32 +118,26 @@ const VehiclePage = () => {
 					</h1>
 				</div>
 				<div className="grid grid-cols-2 xl:grid-cols-[2fr_1fr_1fr_1fr] gap-4">
-					<img
-						src={vehicle.image}
-						alt=""
-						className="col-span-2 xl:col-span-2 row-span-2 object-cover size-full"
-					/>
-					<img
-						src="/images/bmw428.jpg"
-						alt="Additional Image"
-						className="object-cover size-full"
-					/>
-					<img
-						src="/images/bmw4281.jpg"
-						alt="Additional Image"
-						className="object-cover size-full"
-					/>
-					<img
-						src="/images/camry_se.jpg"
-						alt="Additional Image"
-						className="object-coverc size-full"
-					/>
-					<img
-						src="/images/bmw4283.jpg"
-						alt="Additional Image"
-						className="object-cover size-full"
-					/>
+					{/* Main Image */}
+					{vehicle.image && vehicle.image[0] && (
+						<img
+							src={vehicle.image[0]}
+							alt="Main Vehicle"
+							className="col-span-2 xl:col-span-2 row-span-2 object-cover size-full"
+						/>
+					)}
+
+					{/* Additional Images */}
+					{vehicle.image?.slice(1).map((image, index) => (
+						<img
+							key={index}
+							src={image}
+							alt={`Additional Image ${index + 1}`}
+							className="object-cover size-full"
+						/>
+					))}
 				</div>
+
 				<div className="flex flex-col-reverse 2xl:flex-row gap-20">
 					<div>
 						<h1 className="text-mainColor font-medium text-2xl mb-8">
