@@ -16,6 +16,7 @@ interface ICustomFormFieldProps {
 	description?: string;
 	placeholder?: string;
 	type?: string;
+	onChange?: (e: any) => void;
 }
 
 const CustomFormField = ({
@@ -25,6 +26,7 @@ const CustomFormField = ({
 	description,
 	type = "text",
 	placeholder,
+	onChange,
 }: ICustomFormFieldProps) => {
 	return (
 		<FormField
@@ -39,16 +41,21 @@ const CustomFormField = ({
 								type="file"
 								{...field}
 								value={undefined}
+								multiple
+								accept="image/*"
 								onChange={(e) => {
-									if (
-										e.target.files &&
-										e.target.files.length > 0
-									) {
-										field.onChange(e.target.files[0]);
+									if (e.target.files) {
+										const filesArray = Array.from(
+											e.target.files
+										);
+										field.onChange(filesArray);
+										console.log("filesArray: ", filesArray);
+										if (onChange) onChange(filesArray);
 									} else {
 										field.onChange(null);
 									}
 								}}
+								// onChange={onChange}
 							/>
 						) : (
 							<Input

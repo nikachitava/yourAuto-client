@@ -38,7 +38,7 @@ export interface IVehicleCardProps {
 	price: string;
 	gearBox: string;
     mileage: string;
-	image?: string;
+	image: string;
 }
 
 export type VehicleBrands =

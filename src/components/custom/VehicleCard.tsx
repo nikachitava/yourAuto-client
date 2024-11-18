@@ -36,6 +36,11 @@ const VehicleCard: React.FC<IVehicleCardProps> = ({
 		}
 	};
 
+	// const imageArrayString = image[0];
+
+	// // const firstImageUrl = images[0];
+	// console.log("result: ", imageArrayString);
+
 	return (
 		<div
 			className="w-[327px] rounded-md overflow-hidden"

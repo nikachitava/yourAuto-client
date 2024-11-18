@@ -48,7 +48,7 @@ const formSchema = z.object({
 	cylinder: z.string().min(2, "Cylinder minimum lenght 2 symbol").max(50),
 	color: z.string().min(2, "Color minimum lenght 2 symbol").max(50),
 	vin: z.string().min(2, "Vincode minimum lenght 2 symbol").max(50),
-	image: z.instanceof(File).nullable().optional().default(null),
+	image: z.any(),
 });
 
 const AddVehiclePage = () => {
@@ -77,13 +77,12 @@ const AddVehiclePage = () => {
 		},
 	});
 
-	console.log(form.formState.errors);
-
 	const brandValue = form.watch("brand");
 	const isSubmitting = form.formState.isSubmitting;
 
 	const { currentUser } = useContext(AuthorizationContext);
 	const [modelOptions, setModelOptions] = useState<string[]>([]);
+	const [imagesPreview, setImagesPreview] = useState<string[] | null>(null);
 
 	useEffect(() => {
 		if (
@@ -123,20 +122,29 @@ const AddVehiclePage = () => {
 			newVehicleData.append("color", values.color);
 			newVehicleData.append("vin", values.vin);
 
-			if (values.image) {
-				const downloadUrl = await uploadImageToFirebase(values.image);
-				newVehicleData.append("image", downloadUrl);
+			for (const file of values.image) {
+				const downloadUrl = await uploadImageToFirebase(file);
+				newVehicleData.append("image[]", downloadUrl);
 			}
 
-			newVehicleData.forEach((value, key) => {
-				console.log(`${key}: ${value}`);
-			});
+			for (let [key, value] of newVehicleData.entries()) {
+				console.log(`${key}:`, value);
+			}
 
-			const response = await useAxios.post("/vehicle", newVehicleData);
-			console.log("Response:", response);
+			await useAxios.post("/vehicle", newVehicleData);
 			navigate("/");
 		} catch (error) {
 			console.error("Error adding vehicle:", error);
+		}
+	};
+
+	const handleImagesChange = (files: FileList | null) => {
+		if (files) {
+			const fileArray = Array.from(files).slice(0, 5);
+			const previews = fileArray.map((file) => URL.createObjectURL(file));
+			setImagesPreview(previews);
+		} else {
+			setImagesPreview([]);
 		}
 	};
 
@@ -284,13 +292,29 @@ const AddVehiclePage = () => {
 					/>
 				</div>
 
-				<CustomFormField
-					control={form.control}
-					name="image"
-					label="Image"
-					type="file"
-					placeholder="Vehicle Images"
-				/>
+				<div>
+					<CustomFormField
+						control={form.control}
+						name="image"
+						label="Image"
+						type="file"
+						placeholder="Vehicle Images"
+						onChange={handleImagesChange}
+					/>
+
+					{imagesPreview && (
+						<div className="border border-dotted p-10 flex items-center gap-10">
+							{imagesPreview.map((preview, index) => (
+								<img
+									key={index}
+									src={preview}
+									alt={`Preview ${index + 1}`}
+									className="h-20 w-20 object-cover rounded"
+								/>
+							))}
+						</div>
+					)}
+				</div>
 
 				<Button type="submit" className="w-full bg-buttonColor">
 					{isSubmitting ? <LoaderSpiiner /> : "Submit"}

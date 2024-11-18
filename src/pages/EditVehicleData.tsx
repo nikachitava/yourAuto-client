@@ -18,8 +18,10 @@ import { useAxios } from "@/hooks/useAxios";
 import { useEffect, useState } from "react";
 import { IVehicle, VehicleBrands } from "@/Types/IVehicle";
 import { useNavigate, useParams } from "react-router-dom";
+import uploadImageToFirebase from "@/firebase/uploadImage";
+import LoaderSpiiner from "@/components/custom/LoaderSpiiner";
 
-const formSchema = z.object({
+const EditVehicleFormSchema = z.object({
 	title: z.string().min(2).max(50).optional(),
 	brand: z.string().min(2).max(50).optional(),
 	model: z.string().min(2).max(50).optional(),
@@ -38,7 +40,7 @@ const formSchema = z.object({
 	cylinder: z.string().min(2).max(50).optional(),
 	color: z.string().min(2).max(50).optional(),
 	vin: z.string().min(2).max(50).optional(),
-	image: z.instanceof(File).nullable().optional().default(null),
+	image: z.any().optional(),
 });
 
 const EditVehicleData = () => {
@@ -52,25 +54,25 @@ const EditVehicleData = () => {
 				const vehicleData = await useAxios.get(`/vehicle/${id}`);
 				setVehicle(vehicleData.data);
 				form.reset({
-					title: vehicleData.data.title,
-					brand: vehicleData.data.brand,
-					model: vehicleData.data.model,
-					type: vehicleData.data.type,
-					status: vehicleData.data.status,
-					fuelType: vehicleData.data.fuelType,
-					year: vehicleData.data.year,
-					price: vehicleData.data.price,
-					mileage: vehicleData.data.mileage,
-					engine: vehicleData.data.engine,
-					gearBox: vehicleData.data.gearBox,
-					description: vehicleData.data.description,
-					driveType: vehicleData.data.driveType,
-					condition: vehicleData.data.condition,
-					door: vehicleData.data.door,
-					cylinder: vehicleData.data.cylinder,
-					color: vehicleData.data.color,
-					vin: vehicleData.data.vin,
-					image: null,
+					title: vehicleData.data.title || "",
+					brand: vehicleData.data.brand || "",
+					model: vehicleData.data.model || "",
+					type: vehicleData.data.type || "",
+					status: vehicleData.data.status || "",
+					fuelType: vehicleData.data.fuelType || "",
+					year: vehicleData.data.year || "",
+					price: vehicleData.data.price || "",
+					mileage: vehicleData.data.mileage || "",
+					engine: vehicleData.data.engine || "",
+					gearBox: vehicleData.data.gearBox || "",
+					description: vehicleData.data.description || "",
+					driveType: vehicleData.data.driveType || "",
+					condition: vehicleData.data.condition || "",
+					door: vehicleData.data.door || "",
+					cylinder: vehicleData.data.cylinder || "",
+					color: vehicleData.data.color || "",
+					vin: vehicleData.data.vin || "",
+					image: vehicleData.data.image,
 				});
 			} catch (error) {
 				console.log(error);
@@ -81,8 +83,8 @@ const EditVehicleData = () => {
 		else navigate("/");
 	}, []);
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof EditVehicleFormSchema>>({
+		resolver: zodResolver(EditVehicleFormSchema),
 		defaultValues: {
 			title: "",
 			brand: "",
@@ -106,9 +108,11 @@ const EditVehicleData = () => {
 		},
 	});
 
+	const isSubmitting = form.formState.isSubmitting;
 	const brandValue = form.watch("brand");
 
 	const [modelOptions, setModelOptions] = useState<string[]>([]);
+	const [imagesPreview, setImagesPreview] = useState<string[] | null>(null);
 
 	useEffect(() => {
 		if (
@@ -121,12 +125,69 @@ const EditVehicleData = () => {
 		}
 	}, [brandValue]);
 
-	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+	const onSubmit = async (values: z.infer<typeof EditVehicleFormSchema>) => {
 		try {
-			await useAxios.patch(`/vehicle/${id}`, values);
-			console.log(values);
+			const newVehicleData = new FormData();
+
+			if (values.title) newVehicleData.append("title", values.title);
+			if (values.brand) newVehicleData.append("brand", values.brand);
+			if (values.model) newVehicleData.append("model", values.model);
+			if (values.type) newVehicleData.append("type", values.type);
+			if (values.status) newVehicleData.append("status", values.status);
+			if (values.fuelType)
+				newVehicleData.append("fuelType", values.fuelType);
+			if (values.year) newVehicleData.append("year", values.year);
+			if (values.price) newVehicleData.append("price", values.price);
+			if (values.mileage)
+				newVehicleData.append("mileage", values.mileage);
+			if (values.engine) newVehicleData.append("engine", values.engine);
+			if (values.gearBox)
+				newVehicleData.append("gearBox", values.gearBox);
+			if (values.description)
+				newVehicleData.append("description", values.description);
+			if (values.driveType)
+				newVehicleData.append("driveType", values.driveType);
+			if (values.condition)
+				newVehicleData.append("condition", values.condition);
+			if (values.door) newVehicleData.append("door", values.door);
+			if (values.cylinder)
+				newVehicleData.append("cylinder", values.cylinder);
+			if (values.color) newVehicleData.append("color", values.color);
+			if (values.vin) newVehicleData.append("vin", values.vin);
+
+			const uploadedImageUrls: string[] = [];
+
+			if (values.image && values.image.length > 0) {
+				for (const file of values.image) {
+					const downloadUrl = await uploadImageToFirebase(file);
+					uploadedImageUrls.push(downloadUrl);
+				}
+			}
+
+			const payload = {
+				...values,
+				image: uploadedImageUrls,
+			};
+
+			// for (let [key, value] of newVehicleData.entries()) {
+			// 	console.log(`${key}:`, value);
+			// }
+			console.log(payload);
+
+			await useAxios.patch(`/vehicle/${id}`, payload);
+			navigate("/");
 		} catch (error) {
 			console.error("Error adding vehicle:", error);
+		}
+	};
+
+	const handleImagesChange = (files: FileList | null) => {
+		if (files) {
+			const fileArray = Array.from(files).slice(0, 5);
+			const previews = fileArray.map((file) => URL.createObjectURL(file));
+			setImagesPreview(previews);
+		} else {
+			setImagesPreview([]);
 		}
 	};
 
@@ -297,16 +358,31 @@ const EditVehicleData = () => {
 						/>
 					</div>
 
-					<CustomFormField
-						control={form.control}
-						name="image"
-						label="Image"
-						type="file"
-						placeholder="Vehicle Images"
-					/>
+					<div>
+						<CustomFormField
+							control={form.control}
+							name="image"
+							label="Image"
+							type="file"
+							placeholder="Vehicle Images"
+							onChange={handleImagesChange}
+						/>
+						{imagesPreview && (
+							<div className="border border-dotted p-10 flex items-center gap-10">
+								{imagesPreview.map((preview, index) => (
+									<img
+										key={index}
+										src={preview}
+										alt={`Preview ${index + 1}`}
+										className="h-20 w-20 object-cover rounded"
+									/>
+								))}
+							</div>
+						)}
+					</div>
 
-					<Button type="submit" className="w-full">
-						Edit
+					<Button type="submit" className="w-full bg-buttonColor">
+						{isSubmitting ? <LoaderSpiiner /> : "Edit"}
 					</Button>
 				</form>
 			</Form>
