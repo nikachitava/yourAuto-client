@@ -23,26 +23,28 @@ const UserProfile = () => {
 	}, [id]);
 
 	return (
-		<section className="container grid grid-cols-5 gap-8 my-20">
-			{vehicles.length === 0 ? (
-				<h1 className="text-white text-2xl">
-					This user don't have any vehicle
-				</h1>
-			) : (
-				vehicles.map((vehicle, index) => (
-					<VehicleCard
-						key={index}
-						mileage={vehicle.mileage}
-						owner={vehicle.owner}
-						title={vehicle.title}
-						brand={vehicle.brand}
-						fuelType={vehicle.fuelType}
-						price={vehicle.price}
-						gearBox={vehicle.gearBox}
-						image={vehicle.image}
-					/>
-				))
-			)}
+		<section className="container flex items-center justify-center">
+			<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-8 my-20">
+				{vehicles.length === 0 ? (
+					<h1 className="text-white text-2xl">
+						This user don't have any vehicle
+					</h1>
+				) : (
+					vehicles.map((vehicle, index) => (
+						<VehicleCard
+							key={index}
+							mileage={vehicle.mileage}
+							owner={vehicle.owner}
+							title={vehicle.title}
+							brand={vehicle.brand}
+							fuelType={vehicle.fuelType}
+							price={vehicle.price}
+							gearBox={vehicle.gearBox}
+							image={vehicle.image[0]}
+						/>
+					))
+				)}
+			</div>
 		</section>
 	);
 };
