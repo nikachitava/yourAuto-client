@@ -143,86 +143,97 @@ const VehiclePage = () => {
 						<h1 className="text-mainColor font-medium text-2xl mb-8">
 							Car Overview
 						</h1>
-						<div className="max-w-[1000px] flex flex-col xl:flex-row xl:items-center justify-between gap-10">
+						{/* <div className="max-w-[1000px] flex flex-col xl:flex-row xl:items-center justify-between gap-10 bg-green-500"> */}
+						<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-10">
+							{/* Left Column */}
 							<div className="space-y-3">
 								<CarOverviewItem
-									image={"/images/icons/body.svg"}
+									image="/images/icons/body.svg"
 									header="Body"
 									title={vehicle.type}
 								/>
+
 								<CarOverviewItem
-									image={"/images/icons/mileage.svg"}
+									image="/images/icons/mileage.svg"
 									header="Mileage"
 									title={vehicle.mileage}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/fuel.svg"}
+									image="/images/icons/fuel.svg"
 									header="Fuel Type"
 									title={vehicle.type}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/year.svg"}
+									image="/images/icons/year.svg"
 									header="Year"
 									title={vehicle.year}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/transmision.svg"}
+									image="/images/icons/transmision.svg"
 									header="Transmision"
 									title={vehicle.gearBox}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/driveType.svg"}
-									header="Body"
+									image="/images/icons/driveType.svg"
+									header="Drive Type"
 									title={vehicle.type}
 								/>
 							</div>
+
+							{/* Middle Column */}
 							<div className="space-y-3">
 								<CarOverviewItem
-									image={"/images/icons/condition.svg"}
+									image="/images/icons/condition.svg"
 									header="Condition"
 									title={vehicle.condition}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/engine.svg"}
+									image="/images/icons/engine.svg"
 									header="Engine"
 									title={vehicle.engine}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/door.svg"}
+									image="/images/icons/door.svg"
 									header="Door"
 									title={vehicle.door}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/cylinder.svg"}
+									image="/images/icons/cylinder.svg"
 									header="Cylinder"
 									title={vehicle.cylinder}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/color.svg"}
+									image="/images/icons/color.svg"
 									header="Color"
 									title={vehicle.color}
 								/>
 								<CarOverviewItem
-									image={"/images/icons/vin.svg"}
+									image="/images/icons/vin.svg"
 									header="VIN"
 									title={vehicle.vin}
 								/>
 							</div>
+
+							{/* Right Column */}
+							<div className="flex flex-col items-center justify-between">
+								<VehicleOwnerCard
+									userID={vehicle.owner._id}
+									name={vehicle.owner.name}
+									surname={vehicle.owner.surname}
+									phone={vehicle.owner.phone}
+								/>
+							</div>
 						</div>
-						<div className="mt-10">
+
+						<div className="mt-10 break-all">
 							<h1 className="text-mainColor font-medium text-2xl mb-8">
 								Description
 							</h1>
-							<p>{vehicle.description}</p>
+							<p className="break-all">
+								{vehicle.description}
+								asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdjaksdkasjdajksdnajskdansjkdnaskjdansjkdnasjdnajsdasndjasnduib
+							</p>
 						</div>
-					</div>
-					<div>
-						<VehicleOwnerCard
-							userID={vehicle.owner._id}
-							name={vehicle.owner.name}
-							surname={vehicle.owner.surname}
-							phone={vehicle.owner.phone}
-						/>
 					</div>
 				</div>
 			</div>
