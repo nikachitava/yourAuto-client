@@ -49,7 +49,6 @@ const CustomFormField = ({
 											e.target.files
 										);
 										field.onChange(filesArray);
-										console.log("filesArray: ", filesArray);
 										if (onChange) onChange(filesArray);
 									} else {
 										field.onChange(null);
