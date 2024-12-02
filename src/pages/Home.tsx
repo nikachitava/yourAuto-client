@@ -1,7 +1,7 @@
 import SearchFilter from "@/components/custom/SearchFilter";
 import { AuthorizationContext } from "@/context/AuthorizationContext";
 import { useAxios } from "@/hooks/useAxios";
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useContext } from "react";
 
 const LazyVehiclesContent = React.lazy(
