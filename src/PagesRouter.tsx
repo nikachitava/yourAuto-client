@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import EditVehicleData from "./pages/EditVehicleData";
 import UserProfile from "./pages/UserProfile";
-import React from "react";
+import React, { Suspense } from "react";
 
 const LazyVehiclePage = React.lazy(() => import("./pages/VehiclePage"));
 
@@ -25,7 +25,17 @@ const PagesRouter = () => {
 				/>
 				<Route
 					path="/vehicle/:id"
-					element={<ProtectedRoute element={LazyVehiclePage} />}
+					element={
+						<ProtectedRoute
+							element={() => (
+								<Suspense
+									fallback={<div>Loading Vehicle...</div>}
+								>
+									<LazyVehiclePage />
+								</Suspense>
+							)}
+						/>
+					}
 				/>
 				<Route
 					path="/editvehicle/:id"

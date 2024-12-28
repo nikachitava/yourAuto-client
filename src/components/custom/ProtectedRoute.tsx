@@ -1,6 +1,6 @@
 import { AuthorizationContext } from "@/context/AuthorizationContext";
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
 	element: React.ComponentType;
@@ -12,13 +12,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 	redirectTo = "/",
 }) => {
 	const { currentUser } = useContext(AuthorizationContext);
-	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!currentUser) return navigate(redirectTo);
-	}, [currentUser]);
-
-	return <Component />;
+	if (currentUser === undefined) {
+		return <div>Loading...</div>;
+	}
+	return currentUser ? <Component /> : <Navigate to={redirectTo} />;
 };
 
 export default ProtectedRoute;
