@@ -9,11 +9,16 @@ import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import EditVehicleData from "./pages/EditVehicleData";
 import UserProfile from "./pages/UserProfile";
-import React, { Suspense } from "react";
+import React from "react";
 
 const LazyVehiclePage = React.lazy(() => import("./pages/VehiclePage"));
 
 const PagesRouter = () => {
+	const AuthenticatedAddVehiclePage = ProtectedRoute(AddVehiclePage);
+	const AuthenticatedVehiclePage = ProtectedRoute(LazyVehiclePage);
+	const AuthenticatedEditVehiclePage = ProtectedRoute(EditVehicleData);
+	const AuthenticatedUserPage = ProtectedRoute(UserProfile);
+
 	return (
 		<Routes>
 			{/* Default Layout */}
@@ -21,29 +26,19 @@ const PagesRouter = () => {
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/addvehicle"
-					element={<ProtectedRoute element={AddVehiclePage} />}
+					element={<AuthenticatedAddVehiclePage />}
 				/>
 				<Route
 					path="/vehicle/:id"
-					element={
-						<ProtectedRoute
-							element={() => (
-								<Suspense
-									fallback={<div>Loading Vehicle...</div>}
-								>
-									<LazyVehiclePage />
-								</Suspense>
-							)}
-						/>
-					}
+					element={<AuthenticatedVehiclePage />}
 				/>
 				<Route
 					path="/editvehicle/:id"
-					element={<ProtectedRoute element={EditVehicleData} />}
+					element={<AuthenticatedEditVehiclePage />}
 				/>
 				<Route
 					path="/profile/:id"
-					element={<ProtectedRoute element={UserProfile} />}
+					element={<AuthenticatedUserPage />}
 				/>
 			</Route>
 
