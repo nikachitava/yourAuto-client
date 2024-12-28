@@ -5,19 +5,25 @@ import AuthLayout from "./layouts/AuthLayout";
 import Auth from "./pages/Auth";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/custom/ProtectedRoute";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import EditVehicleData from "./pages/EditVehicleData";
 import UserProfile from "./pages/UserProfile";
 import React from "react";
+import withAuth from "./components/custom/ProtectedRoute";
 
 const LazyVehiclePage = React.lazy(() => import("./pages/VehiclePage"));
 
 const PagesRouter = () => {
-	const AuthenticatedAddVehiclePage = ProtectedRoute(AddVehiclePage);
-	const AuthenticatedVehiclePage = ProtectedRoute(LazyVehiclePage);
-	const AuthenticatedEditVehiclePage = ProtectedRoute(EditVehicleData);
-	const AuthenticatedUserPage = ProtectedRoute(UserProfile);
+	const ProtectedAddVehiclePage = withAuth({
+		WrappedComponent: AddVehiclePage,
+	});
+	const ProtectedVehiclePage = withAuth({
+		WrappedComponent: LazyVehiclePage,
+	});
+	const ProtectedEditVehiclePage = withAuth({
+		WrappedComponent: EditVehicleData,
+	});
+	const ProtectedUserProfile = withAuth({ WrappedComponent: UserProfile });
 
 	return (
 		<Routes>
@@ -26,20 +32,14 @@ const PagesRouter = () => {
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/addvehicle"
-					element={<AuthenticatedAddVehiclePage />}
+					element={<ProtectedAddVehiclePage />}
 				/>
-				<Route
-					path="/vehicle/:id"
-					element={<AuthenticatedVehiclePage />}
-				/>
+				<Route path="/vehicle/:id" element={<ProtectedVehiclePage />} />
 				<Route
 					path="/editvehicle/:id"
-					element={<AuthenticatedEditVehiclePage />}
+					element={<ProtectedEditVehiclePage />}
 				/>
-				<Route
-					path="/profile/:id"
-					element={<AuthenticatedUserPage />}
-				/>
+				<Route path="/profile/:id" element={<ProtectedUserProfile />} />
 			</Route>
 
 			{/* Auth Layout */}
